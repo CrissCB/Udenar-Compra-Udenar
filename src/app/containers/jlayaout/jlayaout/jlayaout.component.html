@@ -1,0 +1,50 @@
+<div class="layout">
+  <!-- Encabezado -->
+  <div class="header-container">
+    <div class="header-left">
+      <div class="image-placeholder">X
+      <!-- <img src="../../../../assets/images/logo.png" alt="Logo Udenar" class="logo-image" />  -->
+   
+      </div>
+      <h1>Udenar emprende Udenar</h1>
+    </div>
+    <div class="header-right">
+      <div class="user-info">
+        <strong>Andrea</strong>
+        <div class="role">Rol: <a href="#">Líder</a></div>
+      </div>
+      <div class="profile-icon">
+        <span class="material-icons"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenedor principal -->
+   <div class="main-container">
+    <!-- Menú lateral -->
+<div class="sidebar" [class.collapsed]="isCollapsed">
+  <button class="toggle-btn" (click)="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+  </button>
+  <div class="menu-section" *ngFor="let item of menu">
+    <div class="menu-title" (click)="toggleSection(item)">
+      {{ item.title }}
+    </div>
+    <ul class="menu-items" *ngIf="item.open">
+      <li *ngFor="let sub of item.subitems">
+       <a href="#" (click)="selectSubItem(sub, item.title, $event)">
+          <i [ngClass]="getIcon(sub)" class="menu-icon"></i>
+          {{ sub }}
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+  
+<div class="content">
+  <app-form-emprendimiento *ngIf="selectedOption === 'emprendimiento-registrar'"></app-form-emprendimiento>
+  <div *ngIf="selectedOption === ''">Seleccione una opción del menú</div>
+</div>
+
+
+

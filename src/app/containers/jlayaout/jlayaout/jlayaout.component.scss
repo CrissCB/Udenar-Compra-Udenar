@@ -1,0 +1,206 @@
+/* Contenedor general layout */
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Header */
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, #4a90e2, #357ABD); /* degradado azul suave */
+  color: #f0f4f8; /* blanco muy suave */
+  padding: 12px 24px;
+  box-shadow: 0 2px 6px rgba(53, 122, 189, 0.3); /* sombra suave */
+  border-radius: 0 0 12px 12px; /* bordes redondeados abajo */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Parte izquierda del header */
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+/* Imagen o icono */
+.image-placeholder {
+  width: 44px;
+  height: 44px;
+  background-color: #d9e6f7; /* azul muy claro */
+  border-radius: 8px;
+  margin-right: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 8px rgba(74, 144, 226, 0.4); /* sombra muy suave */
+}
+
+/* Parte derecha del header */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #e6ebf5; /* texto azul muy claro */
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+
+/* Botón toggle */
+.toggle-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+ 
+  margin-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+.toggle-btn:hover {
+  color: #105aa3; /* Color azul al pasar mouse */
+}
+
+/* Contenedor principal */
+.main-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Sidebar - Menú lateral */
+
+
+.sidebar.collapsed {
+  width: 60px;
+}
+
+.sidebar.collapsed .menu-title,
+.sidebar.collapsed .menu-items {
+  display: none;
+}
+
+.sidebar.collapsed .toggle-btn {
+  align-self: flex-end; /* Empuja el botón a la derecha */
+ color: #007bff;
+  width: fit-content;
+  text-align: right;
+}
+
+/* Secciones del menú */
+.menu-section {
+  margin-bottom: 15px;
+}
+
+.menu-title {
+  font-weight: 700;
+  cursor: pointer;
+  color: #105aa3;
+  padding: 8px 0;
+  border-bottom: 1px solid #105aa3;
+  user-select: none; /* Evita selección de texto al hacer clic */
+  transition: background-color 0.3s ease;
+}
+
+.menu-title:hover {
+  background-color: rgba(16, 90, 163, 0.1);
+}
+
+.menu-items {
+  list-style: none;
+  padding-left: 15px;
+  margin-top: 8px;
+}
+
+.menu-items li a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #000000;
+  padding: 6px 0;
+  transition: color 0.2s ease;
+  border-radius: 4px;
+}
+
+.menu-items li a:hover {
+  color: #105aa3;
+  background-color: rgba(16, 90, 163, 0.1);
+}
+
+.menu-icon {
+  margin-right: 10px;
+  color: #007bff;
+}
+
+/* Contenido principal */
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+/* Logo en header */
+.logo-image {
+  max-height: 50px;
+}
+
+
+.sidebar {
+  width: 250px;
+  background: linear-gradient(135deg, #f0f4f9, #d9e2ec); /* fondo suave degradado azul claro */
+  padding: 15px 20px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(16, 90, 163, 0.1); /* sombra muy suave azul */
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* Botón toggle alineado a la izquierda cuando está abierto */
+.sidebar .toggle-btn {
+  align-self: flex-start;  /* Izquierda */
+  margin-bottom: 10px;
+  width: fit-content;
+  text-align: left;
+  color:  #007BFF;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.sidebar .toggle-btn:hover {
+  color: #007BFF;
+}
+
+/* Sidebar colapsado */
+.sidebar.collapsed {
+  width: 60px;
+}
+
+/* Botón toggle alineado a la derecha cuando está colapsado */
+.sidebar.collapsed .toggle-btn {
+  align-self: flex-end; /* Derecha */
+  margin-bottom: 10px;
+  width: fit-content;
+  text-align: right;
+  color: #007BFF;
+}
+
+/* Ocultar títulos y items en sidebar colapsado */
+.sidebar.collapsed .menu-title,
+.sidebar.collapsed .menu-items {
+  display: none;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #f8f9fa; /* fondo gris claro */
+  overflow-y: auto; /* scroll vertical */
+  border-radius: 0 0 12px 12px; /* bordes redondeados abajo */
+}

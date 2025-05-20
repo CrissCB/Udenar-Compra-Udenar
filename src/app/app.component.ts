@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { JlayaoutComponent } from "./containers/jlayaout/jlayaout/jlayaout.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, JlayaoutComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

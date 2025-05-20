@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { HttpClient } from '@angular/common/http';
 
+
 @Component({
   selector: 'app-callback',
   imports: [],
@@ -20,6 +21,7 @@ export class CallbackComponent implements OnInit {
 
   ngOnInit(): void {
     const code = this.route.snapshot.queryParamMap.get('code');
+    this.router.navigate(['/dashboard']);
     if (code) {
       this.http.post('http://localhost:8000/api/token-exchange', { code }).subscribe({
         next: (response: any) => {
@@ -27,6 +29,7 @@ export class CallbackComponent implements OnInit {
           this.authService.setToken(token);
           console.log('Token received:', token);
           this.router.navigate(['/dashboard']);
+          
         },
         error: err => console.error('Error during token exchange:', err)
       });

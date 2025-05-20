@@ -1,0 +1,32 @@
+<div class="form-container">
+  <h2>Registro de Emprendimiento</h2>
+
+  <form [formGroup]="emprendimientoForm" (ngSubmit)="registrar()">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" formControlName="nombre">
+
+    <label for="marca">Marca:</label>
+    <input type="text" id="marca" formControlName="marca">
+
+    <label for="categoria">Categoría:</label>
+    <select id="categoria" formControlName="categoria">
+      <option *ngFor="let cat of categorias" [value]="cat">{{ cat }}</option>
+    </select>
+
+    <label for="idUsuario">Identificación Usuario:</label>
+    <input type="text" id="idUsuario" formControlName="idUsuario" readonly>
+
+    <label for="fechaInscripcion">Fecha Inscripción:</label>
+    <input type="text" id="fechaInscripcion" formControlName="fechaInscripcion" readonly>
+
+    <label for="descripcion">Descripción:</label>
+    <textarea id="descripcion" formControlName="descripcion" rows="4" placeholder="Describa en qué consiste su emprendimiento"></textarea>
+
+    <div class="button-group">
+      <button type="button" (click)="cancelar()">Cancelar</button>
+      <button type="button" (click)="limpiarCampos()">Limpiar Campos</button>
+      <button type="submit">Registrar</button>
+    </div>
+  </form>
+</div>
+
