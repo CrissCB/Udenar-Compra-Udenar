@@ -1,5 +1,5 @@
 <div class="form-container">
-  <h2>Registro de Emprendimiento</h2>
+  <h2>{{ modoEdicion ? 'Edición de Emprendimiento' : 'Registro de Emprendimiento' }}</h2>
 
   <form [formGroup]="emprendimientoForm" (ngSubmit)="registrar()">
     <label for="nombre">Nombre:</label>
@@ -9,24 +9,26 @@
     <input type="text" id="marca" formControlName="marca">
 
     <label for="categoria">Categoría:</label>
-    <select id="categoria" formControlName="categoria">
-      <option *ngFor="let cat of categorias" [value]="cat">{{ cat }}</option>
+    <select id="categoria" formControlName="id_cat">
+      <option value="" class="" selected="selected">Seleccione</option>
+      <option *ngFor="let cat of categorias" [value]="cat.id_cat">{{ cat.nombre }}</option>
     </select>
 
+
     <label for="idUsuario">Identificación Usuario:</label>
-    <input type="text" id="idUsuario" formControlName="idUsuario" readonly>
+    <input type="text" [value]="idUser" id="idUsuario" disabled>
 
     <label for="fechaInscripcion">Fecha Inscripción:</label>
-    <input type="text" id="fechaInscripcion" formControlName="fechaInscripcion" readonly>
+    <input type="text" id="fechaInscripcion" readonly>
 
     <label for="descripcion">Descripción:</label>
-    <textarea id="descripcion" formControlName="descripcion" rows="4" placeholder="Describa en qué consiste su emprendimiento"></textarea>
+    <textarea id="descripcion" formControlName="descripcion" rows="4"
+      placeholder="Describa en qué consiste su emprendimiento"></textarea>
 
     <div class="button-group">
       <button type="button" (click)="cancelar()">Cancelar</button>
       <button type="button" (click)="limpiarCampos()">Limpiar Campos</button>
-      <button type="submit">Registrar</button>
+      <button type="submit">{{ modoEdicion ? 'Guardar Cambios' : 'Registrar' }}</button>
     </div>
   </form>
 </div>
-
