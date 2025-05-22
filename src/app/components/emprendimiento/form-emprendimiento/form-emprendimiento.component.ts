@@ -24,14 +24,12 @@ export class FormEmprendimientoComponent implements OnInit {
   identificacion: any[] = [];
   ids: any[] = [];
   idUser: string = '';
-  // identificacion: string = '';
 
   constructor(private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private emprendimientoService: EmprendimientoService,
     private AuthService: AuthService
-    // private emprendimientoService: EmprendimientoService
   ) { }
 
   ngOnInit(): void {
@@ -40,15 +38,11 @@ export class FormEmprendimientoComponent implements OnInit {
       marca: [''],
       id_cat: [''],
       id_usuario: [{ value: this.idUser, disabled: true }],
-      // fechaInscripcion: [{ value: new Date().toISOString().substring(0, 10), disabled: true }],
       descripcion: ['']
-
-
     });
 
     this.obternerUsuario();
     this.obternerCategoriaEmprendimiento();
-
 
     this.route.params.subscribe(params => {
       if (params['id']) {
@@ -57,7 +51,6 @@ export class FormEmprendimientoComponent implements OnInit {
         this.cargarDatos(this.idEmprendimiento);
       }
     });
-
   }
 
   limpiarCampos(): void {
@@ -69,8 +62,6 @@ export class FormEmprendimientoComponent implements OnInit {
       fechaInscripcion: new Date().toISOString().substring(0, 10),
       descripcion: ''
     });
-
-
   }
 
   cargarDatos(nombre: string) {
@@ -93,14 +84,12 @@ export class FormEmprendimientoComponent implements OnInit {
     console.log('Registro cancelado');
   }
 
-
   obternerCategoriaEmprendimiento() {
     this.emprendimientoService.obtenerCategoriaEmprendimiento().subscribe(data => {
       this.categorias = data;
       console.log('Categorías obtenidas:', this.categorias);
     });
   }
-
 
   obternerUsuario() {
     this.emprendimientoService.obtenerUsuarioKey().subscribe(data => {
@@ -125,6 +114,4 @@ export class FormEmprendimientoComponent implements OnInit {
       }
     });
   }
-
-
 }
