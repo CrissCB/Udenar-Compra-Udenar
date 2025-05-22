@@ -24,7 +24,7 @@ export class JlayaoutComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('JlayaoutComponent initialized');
+    // console.log('JlayaoutComponent initialized');
     // Initialization logic can go here
   }
   logoPath = 'assets/images/logo.png';
