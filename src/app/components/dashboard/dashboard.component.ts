@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
+import { JlayaoutComponent } from '../../containers/jlayaout/jlayaout/jlayaout.component';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  imports: [JlayaoutComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -11,6 +12,5 @@ import { AuthService } from '../../auth/auth.service';
 export class DashboardComponent {
   constructor(private authService: AuthService) { 
     const token = this.authService.getToken();
-    console.log('Token in Dashboard:', token);
   }
 }
