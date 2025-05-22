@@ -94,23 +94,23 @@ export class FormEmprendimientoComponent implements OnInit {
   obternerUsuario() {
     this.emprendimientoService.obtenerUsuarioKey().subscribe(data => {
       this.usuario = data;
-      this.identificacion = this.usuario.map(u => u.identificacion);
-      this.ids = this.usuario.map(u => u.id);
+      // this.identificacion = this.usuario.map(u => u.identificacion);
+      // this.ids = this.usuario.map(u => u.id);
 
       const token = this.AuthService.getToken();
       if (token) {
         const decodedToken: any = jwtDecode(token);
         const sub = decodedToken.sub;
-        const usuarioLogueado = this.usuario.find(u => u.id === sub);
+        this.emprendimientoService.obtenerUsuarioKeyPorId(sub).subscribe(data => {
+          this.idUser = data.identificacion;
+          if (this.idUser !== null) {
+            // console.log('ID de usuario logueado:', this.idUser);
+          } else {
+            this.idUser = '0';
+            console.error('No se encontró el usuario logueado en la lista de usuarios');
+          }
+        });
 
-        if (usuarioLogueado) {
-          this.idUser = usuarioLogueado.identificacion;
-          console.log('ID de usuario logueado:', this.idUser);
-          console.log('Usuario logueado:', usuarioLogueado);
-        } else {
-          this.idUser = '0';
-          console.error('No se encontró el usuario logueado en la lista de usuarios');
-        }
       }
     });
   }
