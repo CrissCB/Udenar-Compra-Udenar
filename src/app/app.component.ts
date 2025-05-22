@@ -1,16 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { JlayaoutComponent } from "./containers/jlayaout/jlayaout/jlayaout.component";
+// import { JlayaoutComponent } from "./containers/jlayaout/jlayaout/jlayaout.component";
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from './auth/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, JlayaoutComponent],
+  imports: [RouterOutlet, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 
 export class AppComponent implements OnInit {
-
+   isAuthenticated = false;
+  constructor(private http: HttpClient, public authService: AuthService) {
+    this.isAuthenticated = !!this.authService.getToken();
+   }
   ngOnInit(): void {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
@@ -24,6 +31,7 @@ export class AppComponent implements OnInit {
         `&response_type=code` +
         `&scope=openid` +
         `&redirect_uri=${encodeURIComponent(redirectUri)}`;
+      // console.log('auth URL:', sessionStorage.getItem('access_token'));
 
       if (!sessionStorage.getItem('access_token')) {
         window.location.href = authUrl;
