@@ -17,21 +17,31 @@ export class CallbackComponent implements OnInit {
     private http: HttpClient,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+
     const code = this.route.snapshot.queryParamMap.get('code');
-    this.router.navigate(['/dashboard']);
+
     if (code) {
       this.http.post('http://localhost:8000/api/token-exchange', { code }).subscribe({
         next: (response: any) => {
           const token = response.access_token;
+          const idToken = response.id_token;
+
+          // Almacena los tokens de forma síncrona
           this.authService.setToken(token);
-          console.log('Token received:', token);
-          this.router.navigate(['/dashboard']);
+          this.authService.setIdToken(idToken);
+          // console.log('Token received:', token);
+          // console.log('IdToken received:', idToken);
           
+          this.router.navigate(['/dashboard']);
+
         },
-        error: err => console.error('Error during token exchange:', err)
+        error: err => {
+          console.error('Error during token exchange:', err);
+          this.router.navigate(['/error']);
+        }
       });
     }
   }
