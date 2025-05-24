@@ -1,36 +1,31 @@
 <div class="layout">
   <!-- Encabezado -->
+
   <div class="header-container">
     <div class="header-left">
-      <div class="image-placeholder">
-        <img src="assets/images/logo.png" alt="Logo Udenar" class="logo-image" />
-
+      <div>
+        <img src="assets/images/logo_siw.png" alt="Logo Udenar" class="logo-image" />
       </div>
-      <h1>Udenar emprende Udenar</h1>
+      <h1>Udenar Compra Udenar</h1>
     </div>
+
     <div class="header-right">
+
       <div class="user-info">
-
-
-        <strong>User:{{ this.username || 'Usuario' }}</strong>
-        <div class="role">Rol: {{ this.role || 'Sin rol' }}</div>
-      </div>
-      <div class="profile-icon">
-        <span class="material-icons"></span>
-      </div>
-    </div>
-    <div class="header-right">
-      <div class="user-info">
-
-        <div class="role"><a (click)="cerrarSesion()">Cerrar sesión</a></div>
-      </div>
-      <div class="profile-icon">
-        <span class="material-icons"></span>
+        <strong>
+          <i class="fas fa-user-circle"></i>
+          <span class="username">{{ this.username || 'Usuario' }}</span>
+        </strong>
+        <div class="role">
+          <span class="rol-label">Rol:</span>
+          <span class="rol-variable">{{ role || 'Sin rol' }}</span>
+        </div>
+        <div class="role"><a (click)="cerrarSesion()"><i class="fas fa-sign-out-alt"></i></a></div>
       </div>
     </div>
   </div>
 
-  <!-- Contenedor principal -->
+  <!-- Menu -->
   <div class="main-container">
     <!-- Menú lateral -->
     <div class="sidebar" [class.collapsed]="isCollapsed">
