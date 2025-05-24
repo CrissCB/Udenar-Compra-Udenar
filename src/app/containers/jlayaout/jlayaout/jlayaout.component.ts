@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormEmprendimientoComponent } from '../../../components/emprendimiento/form-emprendimiento/form-emprendimiento.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../../auth/auth.service';
+import { SharedDataService } from '../../../app-core/servicios/shared-data.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-jlayaout',
@@ -15,20 +18,44 @@ import { AuthService } from '../../../auth/auth.service';
 
 })
 
-export class JlayaoutComponent implements OnInit {
+export class JlayaoutComponent implements OnInit, OnDestroy {
+  userData: any;
+  currentRole: string = '';
+  currentname: string = '';
+  usuario: any[] = [];
+  identificacion: any[] = [];
+  ids: any[] = [];
+  idUser: string = '';
+  username: string = '';
+  role: string = '';
+  roles: string[] = [];
+
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private SharedDataService: SharedDataService
   ) { }
 
-  ngOnInit(): void {
-    // console.log('JlayaoutComponent initialized');
-    // Initialization logic can go here
+  private destroy$ = new Subject<void>();
+
+  ngOnInit() {
+    this.obtenerUsuario();
+    this.currentRole = this.role || 'sin-rol';
+    this.currentname = this.username || 'invitado';
   }
-  logoPath = 'assets/images/logo.png';
+
+
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+
   isCollapsed = false;
+
 
   menu = [
     {
@@ -113,4 +140,14 @@ export class JlayaoutComponent implements OnInit {
     console.log('URL de logout:', logoutUrl.toString());
     window.location.href = logoutUrl.toString();
   }
+
+  obtenerUsuario() {
+    this.SharedDataService.usuario$.subscribe(usuario => this.usuario = usuario);
+    this.SharedDataService.idUser$.subscribe(id => this.idUser = id ?? '');
+    this.SharedDataService.username$.subscribe(name => this.username = name ?? '');
+    this.SharedDataService.role$.subscribe(role => this.role = role ?? '');
+    this.SharedDataService.roles$.subscribe(roles => this.roles = roles);
+  }
+
+
 }

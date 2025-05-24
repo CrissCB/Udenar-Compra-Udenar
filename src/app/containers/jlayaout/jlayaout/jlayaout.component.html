@@ -2,16 +2,18 @@
   <!-- Encabezado -->
   <div class="header-container">
     <div class="header-left">
-      <div class="image-placeholder">X
-        <!-- <img src="../../../../assets/images/logo.png" alt="Logo Udenar" class="logo-image" />  -->
+      <div class="image-placeholder">
+        <img src="assets/images/logo.png" alt="Logo Udenar" class="logo-image" />
 
       </div>
       <h1>Udenar emprende Udenar</h1>
     </div>
     <div class="header-right">
       <div class="user-info">
-        <strong>Andrea</strong>
-        <div class="role">Rol: <a href="#">Líder</a></div>
+
+
+        <strong>User:{{ this.username || 'Usuario' }}</strong>
+        <div class="role">Rol: {{ this.role || 'Sin rol' }}</div>
       </div>
       <div class="profile-icon">
         <span class="material-icons"></span>
