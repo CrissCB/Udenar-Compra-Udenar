@@ -14,15 +14,18 @@ export class EmprendimientoService extends ServiceBase {
     this.ApiUrl = [config.ApiUrl,].join('/');
   }
 
-  registrar(data: any): Observable<any> {
+  registrarEmprendimiento(data: any): Observable<any> {
     return this.http.post(`${this.ApiUrl}/emprendimiento`, data);
   }
 
-  obtenerPorNombre(nombre: string): Observable<any> {
-    return this.http.get(`${this.ApiUrl}/emprendimiento/${nombre}`);
+  actualizarEmprendimiento(data: any) {
+    return this.http.put(`${this.ApiUrl}/${data.id}`, data); // si tienes ID
+  }
+  obtenerPorId(id: string): Observable<any> {
+    return this.http.get(`${this.ApiUrl}/emprendimiento/${id}`);
   }
 
-  actualizar(id: number, data: any): Observable<any> {
+  actualizar(id: string, data: any): Observable<any> {
     return this.http.put(`${this.ApiUrl}/emprendimiento/${id}`, data);
   }
 

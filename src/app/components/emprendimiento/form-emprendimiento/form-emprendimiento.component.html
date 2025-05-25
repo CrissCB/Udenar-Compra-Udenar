@@ -18,7 +18,7 @@
     <input type="text" [value]="idUser" id="idUsuario" disabled>
 
     <label for="fechaInscripcion">Fecha Inscripción:</label>
-    <input type="text" id="fechaInscripcion" readonly>
+    <input type="text" id="fechaInscripcion" [value]="fechaActual" readonly>
 
     <label for="descripcion">Descripción:</label>
     <textarea id="descripcion" formControlName="descripcion" rows="4"
