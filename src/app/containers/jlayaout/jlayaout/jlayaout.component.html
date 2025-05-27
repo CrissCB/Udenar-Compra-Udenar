@@ -1,16 +1,13 @@
-<div class="layout">
-  <!-- Encabezado -->
-
-  <div class="header-container">
-    <div class="header-left">
-      <div>
-        <img src="assets/images/logo_siw.png" alt="Logo Udenar" class="logo-image" />
-      </div>
-      <h1>Udenar Compra Udenar</h1>
+<!-- Encabezado Global-->
+<div class="header-container">
+  <div class="header-left">
+    <div>
+      <img src="assets/images/logo_siw.png" alt="Logo Udenar" class="logo-image" />
     </div>
+    <h1>Udenar Compra Udenar</h1>
+  </div>
 
-    <div class="header-right">
-
+  <div class="header-right">
       <div class="user-info">
         <strong>
           <i class="fas fa-user-circle"></i>
@@ -21,33 +18,6 @@
           <span class="rol-variable">{{ role || 'Sin rol' }}</span>
         </div>
         <div class="role sigin"><a (click)="cerrarSesion()"><i class="fas fa-sign-out-alt"></i></a></div>
-      </div>
     </div>
   </div>
-
-  <!-- Menu -->
-  <div class="main-container">
-    <!-- Menú lateral -->
-    <div class="sidebar" [class.collapsed]="isCollapsed">
-      <button class="toggle-btn" (click)="toggleSidebar()">
-        <i class="fas fa-bars"></i>
-      </button>
-      <div class="menu-section" *ngFor="let item of menu">
-        <div class="menu-title" (click)="toggleSection(item)">
-          {{ item.title }}
-        </div>
-        <ul class="menu-items" *ngIf="item.open">
-          <li *ngFor="let sub of item.subitems">
-            <a href="#" (click)="selectSubItem(sub, item.title, $event)">
-              <i [ngClass]="getIcon(sub)" class="menu-icon"></i>
-              {{ sub }}
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="content">
-      <app-form-emprendimiento *ngIf="selectedOption === 'emprendimiento-registrar'"></app-form-emprendimiento>
-      <div *ngIf="selectedOption === ''">Seleccione una opción del menú</div>
-    </div>
+</div>

@@ -1,12 +1,4 @@
 /* Contenedor general layout */
-.layout {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-
-
-
   .header-container {
     display: flex;
     justify-content: space-between;
@@ -55,7 +47,6 @@
     color: #91CC26; /* Cambia el color al pasar el mouse */
     cursor: pointer;
   }
-
   .role {
     font-size: 0.9rem;
     color: #ffffff;
@@ -85,7 +76,6 @@
   text-transform: capitalize; /* Primera letra en mayúscula */
 }
 
-
   
 /* Botón toggle */
 .toggle-btn {
@@ -100,150 +90,5 @@
 
 .toggle-btn:hover {
   color: #105aa3; /* Color azul al pasar mouse */
-}
-
-/* Contenedor principal */
-.main-container {
-  display: flex;
-  flex: 1;
-  overflow: hidden;
-  
-}
-
-/* Sidebar - Menú lateral */
-
-
-.sidebar.collapsed {
-  width: 60px;
-}
-
-.sidebar.collapsed .menu-title,
-.sidebar.collapsed .menu-items {
-  display: none;
-}
-
-.sidebar.collapsed .toggle-btn {
-  align-self: flex-end; /* Empuja el botón a la derecha */
- color: #91CC26;
-  width: fit-content;
-  text-align: right;
-  
-}
-
-/* Secciones del menú */
-.menu-section {
-  margin-bottom: 15px;
-}
-
-.menu-title {
-  font-weight: 700;
-  cursor: pointer;
-  color: #02693A;
-  padding: 8px 0;
-  border-bottom: 1px solid #91CC26;
-  user-select: none; /* Evita selección de texto al hacer clic */
-  transition: background-color 0.3s ease;
-}
-
-.menu-title:hover {
-  background-color: rgba(16, 90, 163, 0.1);
-  color: #91CC26;
-}
-
-.menu-items {
-  list-style: none;
-  padding-left: 15px;
-  margin-top: 8px;
-}
-
-.menu-items li a {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: #3E8F34;
-  padding: 6px 0;
-  transition: color 0.2s ease;
-  border-radius: 4px;
-}
-
-.menu-items li a:hover {
-  color: #02693A;
-  background-color: rgba(16, 90, 163, 0.1);
-}
-
-.menu-icon {
-  margin-right: 10px;
-  color: #91CC26;
-}
-
-/* Contenido principal */
-.main-content {
-  flex-grow: 1;
-  padding: 20px;
-}
-
-/* Logo en header */
-.logo-image {
-  max-height: 50px;
-}
-
-
-.sidebar {
-  width: 250px;
-  background: linear-gradient(90deg, #060706, #0C150F); /* fondo suave degradado azul claro */
-  padding: 15px 20px;
-  transition: all 0.3s ease;
-  overflow: hidden;
-  
-  box-shadow: 0 2px 8px rgba(16, 90, 163, 0.1); /* sombra muy suave azul */
-  display: flex;
-  flex-direction: column;
-}
-
-
-/* Botón toggle alineado a la izquierda cuando está abierto */
-.sidebar .toggle-btn {
-  align-self: flex-start;  /* Izquierda */
-  margin-bottom: 10px;
-  width: fit-content;
-  text-align: left;
-  color:  #02693A;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-.sidebar .toggle-btn:hover {
-  color:#91CC26;
-}
-
-/* Sidebar colapsado */
-.sidebar.collapsed {
-  width: 30px;
-}
-
-/* Botón toggle alineado a la derecha cuando está colapsado */
-.sidebar.collapsed .toggle-btn {
-  align-self: flex-end; /* Derecha */
-  margin-bottom: 10px;
-  width: fit-content;
-  text-align: right;
-  color: #91CC26;
-}
-
-/* Ocultar títulos y items en sidebar colapsado */
-.sidebar.collapsed .menu-title,
-.sidebar.collapsed .menu-items {
-  display: none;
-}
-
-.content {
-  flex-grow: 1;
-  padding: 20px;
-  background-color: #f8f9fa; /* fondo gris claro */
-  overflow-y: auto; /* scroll vertical */
-  border-radius: 0 0 12px 12px; /* bordes redondeados abajo */
 }
 

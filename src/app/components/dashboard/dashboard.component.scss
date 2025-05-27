@@ -1,0 +1,28 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.dashboard-header {
+  flex: 0 0 auto; /* altura fija del header */
+}
+
+.dashboard-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.dashboard-sidebar {
+  
+  flex-shrink: 0;
+  overflow-y: auto;
+}
+
+.dashboard-content {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+}

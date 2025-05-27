@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmprendimientoService } from '../../../app-core/servicios/emprendimiento.service';
 import { Categoria } from '../../../app-core/interfaces/categoria-emprendimiento';
 import { AuthService } from '../../../auth/auth.service';
-import { jwtDecode } from 'jwt-decode';
 import { SharedDataService } from '../../../app-core/servicios/shared-data.service';
 @Component({
   selector: 'app-form-emprendimiento',
@@ -31,13 +29,11 @@ export class FormEmprendimientoComponent implements OnInit {
   roles: string[] = [];
   fechaActual: string = new Date().toISOString().split('T')[0];
 
-
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private SharedDataService: SharedDataService,
-
     private emprendimientoService: EmprendimientoService,
     private AuthService: AuthService
   ) { }
@@ -70,8 +66,6 @@ export class FormEmprendimientoComponent implements OnInit {
       nombre: '',
       marca: '',
       categoria: '',
-      idUsuario: '',
-      fechaInscripcion: new Date().toISOString().substring(0, 10),
       descripcion: ''
     });
   }
@@ -131,7 +125,6 @@ export class FormEmprendimientoComponent implements OnInit {
     console.log('Rol de usuario:', this.role);
     console.log('Roles de usuario:', this.roles);
   }
-
 
 
 }
