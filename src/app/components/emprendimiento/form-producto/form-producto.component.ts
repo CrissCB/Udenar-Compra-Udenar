@@ -7,6 +7,7 @@ import { ProductoService } from '../../../app-core/servicios/producto.service';
 import { EmprendimientoService } from '../../../app-core/servicios/emprendimiento.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CategoriaProducto } from '../../../app-core/interfaces/categoria-producto';
+import { SharedDataService } from '../../../app-core/servicios/shared-data.service';
 
 
 @Component({
@@ -20,7 +21,9 @@ import { CategoriaProducto } from '../../../app-core/interfaces/categoria-produc
 export class FormProductoComponent implements OnInit {
 
   // @Input() idEmprendimiento!: number;
+  nombre_emprendimiento: string = '';
   idEmprendimiento: string = '';
+  id_usuario: string = '';
   productoForm!: FormGroup;
   modoEdicion = false;
   categorias: CategoriaProducto[] = []; // Esto debería llenarse desde tu servicio
@@ -29,7 +32,8 @@ export class FormProductoComponent implements OnInit {
     private fb: FormBuilder,
     private productoService: ProductoService,
     private router: Router,
-    private emprendimientoService: EmprendimientoService
+    private emprendimientoService: EmprendimientoService,
+    private SharedDataService: SharedDataService
   ) {}
 
   ngOnInit(): void {
@@ -47,12 +51,28 @@ export class FormProductoComponent implements OnInit {
     });
 
     this. obtenerCategoriaProducto();
+    this.obtenerIdEmprendimiento();
+
   }
 
 obtenerCategoriaProducto() {
   this.emprendimientoService.obtenerCategoriaProducto().subscribe(data => {
     this.categorias = data["categoria de productos"]; // <- así accedes correctamente al arreglo
     console.log('Categorías obtenidas:', this.categorias);
+  });
+}
+
+obtenerIdEmprendimiento() {
+  this.SharedDataService.idUser$.subscribe(id => this.id_usuario = id ?? '');
+
+  this.emprendimientoService.obtenerPorId(''+this.id_usuario).subscribe({
+    next: (data) => {
+      this.nombre_emprendimiento = data.Emprendimiento.nombre;
+      console.log('ID de emprendimiento obtenido:', this.idEmprendimiento);
+    },
+    error: (error) => {
+      console.error('Error al obtener el ID de emprendimiento:', error);
+    }
   });
 }
 

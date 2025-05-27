@@ -3,9 +3,8 @@
 
     <form [formGroup]="productoForm" (ngSubmit)="registrar()">
 
-        <label for="id_emprendimiento">ID Emprendimiento:</label>
-        <input type="text" id="id_emprendimiento" formControlName="id_emprendimiento" [value]="idEmprendimiento"
-            readonly>
+        <label for="nombre_emprendimiento">Nombre Emprendimiento:</label>
+        <input type="text" id="nombre_emprendimiento" formControlName="nombre_emprendimiento" [value]="nombre_emprendimiento" readonly>
 
         <label for="nombre">Nombre:</label>
         <input type="text" id="nombre" formControlName="nombre">
