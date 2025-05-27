@@ -1,19 +1,21 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormEmprendimientoComponent } from '../../../components/emprendimiento/form-emprendimiento/form-emprendimiento.component';
+import { FormProductoComponent } from '../../../components/emprendimiento/form-producto/form-producto.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../../auth/auth.service';
 import { SharedDataService } from '../../../app-core/servicios/shared-data.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CatalogoComponent } from "../../../components/emprendimiento/catalogo/catalogo.component";
 
 @Component({
   selector: 'app-jlayaout',
   standalone: true,
   templateUrl: './jlayaout.component.html',
   styleUrls: ['./jlayaout.component.scss'],
-  imports: [CommonModule, FormEmprendimientoComponent]
+  imports: [CommonModule, FormEmprendimientoComponent, FormProductoComponent, CatalogoComponent]
 
 
 })
@@ -46,71 +48,67 @@ export class JlayaoutComponent implements OnInit, OnDestroy {
     this.currentname = this.username || 'invitado';
   }
 
-
-
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
+  // isCollapsed = false;
 
-  isCollapsed = false;
+  // menu = [
+  //   {
+  //     title: 'EMPRENDIMIENTO',
+  //     open: false,
+  //     subitems: ['Registrar', 'Editar', 'Publicar']
+  //   },
+  //   {
+  //     title: 'PRODUCTO',
+  //     open: false,
+  //     subitems: ['Registrar', 'Editar', 'Publicar']
+  //   },
+  //   {
+  //     title: 'FERIAS',
+  //     open: false,
+  //     subitems: ['Participar', 'Editar', 'Convocatorias']
+  //   },
+  //   {
+  //     title: 'MANUAL',
+  //     open: false,
+  //     subitems: []
+  //   }
+  // ];
 
+  // toggleSidebar() {
+  //   this.isCollapsed = !this.isCollapsed;
+  // }
 
-  menu = [
-    {
-      title: 'EMPRENDIMIENTO',
-      open: false,
-      subitems: ['Registrar', 'Editar', 'Publicar']
-    },
-    {
-      title: 'PRODUCTO',
-      open: false,
-      subitems: ['Registrar', 'Editar', 'Publicar']
-    },
-    {
-      title: 'FERIAS',
-      open: false,
-      subitems: ['Participar', 'Editar', 'Convocatorias']
-    },
-    {
-      title: 'MANUAL',
-      open: false,
-      subitems: []
-    }
-  ];
+  // toggleSection(item: any) {
+  //   item.open = !item.open;
+  // }
 
-  toggleSidebar() {
-    this.isCollapsed = !this.isCollapsed;
-  }
+  // selectSubItem(subitem: string, section: string, event: Event) {
+  //   event.preventDefault();
+  //   this.selectedOption = `${section}-${subitem}`.toLowerCase();
+  // }
 
-  toggleSection(item: any) {
-    item.open = !item.open;
-  }
+  // selectedOption: string = '';
 
-  selectSubItem(subitem: string, section: string, event: Event) {
-    event.preventDefault();
-    this.selectedOption = `${section}-${subitem}`.toLowerCase();
-  }
-
-  selectedOption: string = '';
-
-  getIcon(option: string): string {
-    switch (option.toLowerCase()) {
-      case 'registrar':
-        return 'fas fa-plus-circle';
-      case 'editar':
-        return 'fas fa-edit';
-      case 'publicar':
-        return 'fas fa-upload';
-      case 'participar':
-        return 'fas fa-users';
-      case 'convocatorias':
-        return 'fas fa-bullhorn';
-      default:
-        return 'fas fa-circle';
-    }
-  }
+  // getIcon(option: string): string {
+  //   switch (option.toLowerCase()) {
+  //     case 'registrar':
+  //       return 'fas fa-plus-circle';
+  //     case 'editar':
+  //       return 'fas fa-edit';
+  //     case 'publicar':
+  //       return 'fas fa-upload';
+  //     case 'participar':
+  //       return 'fas fa-users';
+  //     case 'convocatorias':
+  //       return 'fas fa-bullhorn';
+  //     default:
+  //       return 'fas fa-circle';
+  //   }
+  // }
 
   cerrarSesion() {
     const idToken = this.authService.getIdToken();
@@ -148,6 +146,5 @@ export class JlayaoutComponent implements OnInit, OnDestroy {
     this.SharedDataService.role$.subscribe(role => this.role = role ?? '');
     this.SharedDataService.roles$.subscribe(roles => this.roles = roles);
   }
-
 
 }
