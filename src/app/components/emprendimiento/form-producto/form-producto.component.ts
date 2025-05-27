@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductoService } from '../../../app-core/servicios/producto.service';
 import { EmprendimientoService } from '../../../app-core/servicios/emprendimiento.service';
@@ -34,7 +34,7 @@ export class FormProductoComponent implements OnInit {
     private router: Router,
     private emprendimientoService: EmprendimientoService,
     private SharedDataService: SharedDataService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.productoForm = this.fb.group({
@@ -43,42 +43,39 @@ export class FormProductoComponent implements OnInit {
       detalle: [''],
       precio: [0, [Validators.required, Validators.min(0)]],
       stock: [0, [Validators.required, Validators.min(0)]],
-      fecha_elaboracion: ['', ],
+      fecha_elaboracion: ['',],
       fecha_vencimiento: ['',],
       talla: [''],
       codigo_qr: [''],
       id_cat: ['', Validators.required],
     });
 
-    this. obtenerCategoriaProducto();
+    this.obtenerCategoriaProducto();
     this.obtenerIdEmprendimiento();
 
   }
 
-obtenerCategoriaProducto() {
-  this.emprendimientoService.obtenerCategoriaProducto().subscribe(data => {
-    this.categorias = data["categoria de productos"]; // <- así accedes correctamente al arreglo
-    console.log('Categorías obtenidas:', this.categorias);
-  });
-}
+  obtenerCategoriaProducto() {
+    this.emprendimientoService.obtenerCategoriaProducto().subscribe(data => {
+      this.categorias = data["categoria de productos"];
+    });
+  }
 
-obtenerIdEmprendimiento() {
-  this.SharedDataService.idUser$.subscribe(id => this.id_usuario = id ?? '');
+  obtenerIdEmprendimiento() {
+    this.SharedDataService.idUser$.subscribe(id => this.id_usuario = id ?? '');
 
-  this.emprendimientoService.obtenerPorId(''+this.id_usuario).subscribe({
-    next: (data) => {
-      this.nombre_emprendimiento = data.Emprendimiento.nombre;
-      console.log('ID de emprendimiento obtenido:', this.idEmprendimiento);
-    },
-    error: (error) => {
-      console.error('Error al obtener el ID de emprendimiento:', error);
-    }
-  });
-}
+    this.emprendimientoService.obtenerPorId('' + this.id_usuario).subscribe({
+      next: (data) => {
+        this.nombre_emprendimiento = data.Emprendimiento.nombre;
+        console.log('ID de emprendimiento obtenido:', this.idEmprendimiento);
+      },
+      error: (error) => {
+        console.error('Error al obtener el ID de emprendimiento:', error);
+      }
+    });
+  }
 
-
-
-    registrar(): void {
+  registrar(): void {
     if (this.productoForm.invalid) {
       this.productoForm.markAllAsTouched();
       return;
