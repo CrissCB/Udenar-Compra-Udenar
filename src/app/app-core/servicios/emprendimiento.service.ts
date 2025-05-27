@@ -34,6 +34,10 @@ export class EmprendimientoService extends ServiceBase {
 
   }
 
+  obtenerCategoriaProducto(): Observable<any> {
+    return this.http.get(`${this.ApiUrl}/categoria_productos`);
+  }
+
   obtenerUsuario(): Observable<any> {
     return this.http.get(`${this.ApiUrl}/user`);
   }
