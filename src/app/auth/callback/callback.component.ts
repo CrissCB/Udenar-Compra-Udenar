@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../auth.service';
 import { HttpClient } from '@angular/common/http';
-import { EmprendimientoService } from '../../app-core/servicios/emprendimiento.service';
 import { jwtDecode } from 'jwt-decode';
+import { AuthService } from '../auth.service';
 import { SharedDataService } from '../../app-core/servicios/shared-data.service';
+import { UsuarioService } from '../../app-core/servicios/usuarios-api.service';
 
 
 @Component({
@@ -20,7 +20,7 @@ export class CallbackComponent implements OnInit {
     private http: HttpClient,
     private AuthService: AuthService,
     private router: Router,
-    private emprendimientoService: EmprendimientoService,
+    private usuariosservice: UsuarioService,
     private userStateService: SharedDataService
   ) { }
 
@@ -46,10 +46,6 @@ export class CallbackComponent implements OnInit {
           this.AuthService.setToken(token);
           this.AuthService.setIdToken(idToken);
           this.obtenerUsuario();
-          // console.log('Token received:', token);
-          // console.log('IdToken received:', idToken);
-
-
 
           this.router.navigate(['/dashboard']);
 
@@ -63,41 +59,83 @@ export class CallbackComponent implements OnInit {
   }
 
   obtenerUsuario() {
-    this.emprendimientoService.obtenerUsuarioKey().subscribe(data => {
-      this.userStateService.setUsuario(data);
-      this.usuario = data;
-
+    this.usuariosservice.obtenerUsuarioKey().subscribe(data => {
       const token = this.AuthService.getToken();
+
       if (token) {
         const decodedToken: any = jwtDecode(token);
         const sub = decodedToken.sub;
-        this.emprendimientoService.obtenerUsuarioKeyPorId(sub).subscribe(data => {
-          this.userStateService.setIdUser(data.identificacion);
-          this.userStateService.setUsername(data.username);
-          this.userStateService.setRole(data.role);
 
-          this.idUser = data.identificacion;
-          this.username = data.username;
-          this.role = data.role;
+        const usuarioLogueado = data.find((user: any) => user.id === sub);
 
-          if (decodedToken.realm_access?.roles) {
-            const technicalRoles = ['offline_access', 'uma_authorization', 'default-roles-laravel-realm'];
-            const filteredRoles = decodedToken.realm_access.roles.filter((role: string) =>
-              !technicalRoles.includes(role)
-            );
-            this.userStateService.setRoles(filteredRoles);
-            this.role = filteredRoles[0] || 'sin-rol';
-            this.userStateService.setRole(this.role);
-          }
+        if (usuarioLogueado) {
+          this.userStateService.setUsuario(usuarioLogueado);
+          this.usuario = usuarioLogueado;
 
-          if (this.idUser !== null) {
-            // Datos válidos
-          } else {
-            this.idUser = '0';
-            console.error('No se encontró el usuario logueado en la lista de usuarios');
-          }
-        });
+          this.usuariosservice.obtenerUsuarioKeyPorId(sub).subscribe(data => {
+            this.userStateService.setIdUser(data.identificacion);
+            this.userStateService.setUsername(data.username);
+            this.userStateService.setRole(data.rol);
+
+            this.idUser = data.identificacion;
+            this.username = data.username;
+            this.role = data.rol;
+
+            if (decodedToken.realm_access?.roles) {
+              const technicalRoles = ['offline_access', 'uma_authorization', 'default-roles-laravel-realm'];
+              const filteredRoles = decodedToken.realm_access.roles.filter((role: string) =>
+                !technicalRoles.includes(role)
+              );
+              this.userStateService.setRoles(filteredRoles);
+              this.role = filteredRoles[0] || 'sin-rol';
+              this.userStateService.setRole(this.role);
+            }
+
+            if (this.idUser !== null) {
+              this.buscarUsuario(data);
+            } else {
+              this.idUser = '0';
+              console.error('No se encontró el usuario logueado en la lista de usuarios');
+            }
+          });
+        } else {
+          console.error('No se encontró el usuario logueado en la lista de usuarios');
+        }
       }
     });
+  }
+
+  buscarUsuario(data: any) {
+    this.usuariosservice.showUsuarios(data.identificacion).subscribe(
+      response => {
+        console.log('Usuario encontrado:', response);
+      }, 
+      error => {
+        if (error.status === 404) {
+          console.error('Usuario no encontrado, creando nuevo usuario...');
+          this.crearUsuario(data);
+        } else {
+          console.error('Error al buscar el usuario:', error);
+        }
+      });
+  }
+
+  crearUsuario(data: any) {
+    const dataUser = {
+      nombre: data.first_name,
+      apellido: data.last_name,
+      identificacion: data.identificacion,
+      estado: 'AC',
+      email: data.email
+    };
+
+    this.usuariosservice.storeUsuarios(dataUser).subscribe(
+      response => {
+        console.log('Usuario creado exitosamente:');
+      },
+      error => {
+        console.error('Error al crear el usuario:', error);
+      }
+    );
   }
 }

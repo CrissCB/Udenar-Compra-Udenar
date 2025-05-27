@@ -83,12 +83,13 @@ export class FormEmprendimientoComponent implements OnInit {
   }
 
   registrar() {
-     console.log(this.emprendimientoForm.value); 
     if (this.emprendimientoForm.valid) {
+      const id_cat = parseInt(this.emprendimientoForm.value.id_cat);
+      this.emprendimientoForm.patchValue({ id_cat });
+
       const datos = {
         ...this.emprendimientoForm.value,
-        id_usuario: this.idUser,
-        fecha_inscripcion: new Date().toISOString().split('T')[0] // YYYY-MM-DD
+        id_usuario: this.idUser
       };
 
       if (this.modoEdicion) {
@@ -108,10 +109,6 @@ export class FormEmprendimientoComponent implements OnInit {
     }
   }
 
-
-
-
-
   cancelar(): void {
     console.log('Registro cancelado');
   }
@@ -122,8 +119,6 @@ export class FormEmprendimientoComponent implements OnInit {
       console.log('Categorías obtenidas:', this.categorias);
     });
   }
-
-
 
   obtenerUsuario() {
     this.SharedDataService.usuario$.subscribe(usuario => this.usuario = usuario);
