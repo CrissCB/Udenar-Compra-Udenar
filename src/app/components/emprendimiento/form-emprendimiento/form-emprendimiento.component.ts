@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmprendimientoService } from '../../../app-core/servicios/emprendimiento.service';
 import { Categoria } from '../../../app-core/interfaces/categoria-emprendimiento';
 import { AuthService } from '../../../auth/auth.service';
 import { jwtDecode } from 'jwt-decode';
+import { SharedDataService } from '../../../app-core/servicios/shared-data.service';
 @Component({
   selector: 'app-form-emprendimiento',
   standalone: true,
@@ -17,37 +19,47 @@ import { jwtDecode } from 'jwt-decode';
 export class FormEmprendimientoComponent implements OnInit {
   emprendimientoForm!: FormGroup;
   categorias: Categoria[] = [];
-  modoEdicion = false;
+  modoEdicion: boolean = false;
   idEmprendimiento: string = '';
   selectedOption: string = '';
   usuario: any[] = [];
   identificacion: any[] = [];
   ids: any[] = [];
   idUser: string = '';
+  username: string = '';
+  role: string = '';
+  roles: string[] = [];
+  fechaActual: string = new Date().toISOString().split('T')[0];
 
-  constructor(private fb: FormBuilder,
+
+  constructor(
+    private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
+    private SharedDataService: SharedDataService,
+
     private emprendimientoService: EmprendimientoService,
     private AuthService: AuthService
   ) { }
 
   ngOnInit(): void {
     this.emprendimientoForm = this.fb.group({
-      nombre: [''],
+      nombre: ['', Validators.required],
       marca: [''],
-      id_cat: [''],
+      id_cat: ['', Validators.required],
       id_usuario: [{ value: this.idUser, disabled: true }],
-      descripcion: ['']
+      descripcion: ['', Validators.required],
+      estado: ['A', Validators.required], 
+      fechaInscripcion: [{ value: new Date().toISOString().substring(0, 10), disabled: true }],
     });
 
-    this.obternerUsuario();
+    this.obtenerUsuario();
     this.obternerCategoriaEmprendimiento();
 
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.modoEdicion = true;
-        // this.idEmprendimiento = +params['id'];
+        this.idEmprendimiento = params['id'];
         this.cargarDatos(this.idEmprendimiento);
       }
     });
@@ -64,19 +76,36 @@ export class FormEmprendimientoComponent implements OnInit {
     });
   }
 
-  cargarDatos(nombre: string) {
-    this.emprendimientoService.obtenerPorNombre(nombre).subscribe(data => {
+  cargarDatos(id: string) {
+    this.emprendimientoService.obtenerPorId(id).subscribe(data => {
       this.emprendimientoForm.patchValue(data);
     });
   }
 
-  registrar(): void {
+  registrar() {
     if (this.emprendimientoForm.valid) {
+      const id_cat = parseInt(this.emprendimientoForm.value.id_cat);
+      this.emprendimientoForm.patchValue({ id_cat });
+
       const datos = {
-        ...this.emprendimientoForm.getRawValue()
+        ...this.emprendimientoForm.value,
+        id_usuario: this.idUser
       };
-      console.log('Datos a enviar:', datos);
-      // Aquí podrías enviarlos a un servicio
+
+      if (this.modoEdicion) {
+        // Lógica para editar
+        this.emprendimientoService.actualizarEmprendimiento(datos).subscribe(res => {
+          alert('Emprendimiento actualizado');
+        });
+      } else {
+        // Registrar nuevo emprendimiento
+        this.emprendimientoService.registrarEmprendimiento(datos).subscribe(res => {
+          alert('Emprendimiento registrado exitosamente');
+          this.emprendimientoForm.reset();
+        });
+      }
+    } else {
+      alert('Por favor, complete todos los campos obligatorios.');
     }
   }
 
@@ -91,27 +120,18 @@ export class FormEmprendimientoComponent implements OnInit {
     });
   }
 
-  obternerUsuario() {
-    this.emprendimientoService.obtenerUsuarioKey().subscribe(data => {
-      this.usuario = data;
-      // this.identificacion = this.usuario.map(u => u.identificacion);
-      // this.ids = this.usuario.map(u => u.id);
-
-      const token = this.AuthService.getToken();
-      if (token) {
-        const decodedToken: any = jwtDecode(token);
-        const sub = decodedToken.sub;
-        this.emprendimientoService.obtenerUsuarioKeyPorId(sub).subscribe(data => {
-          this.idUser = data.identificacion;
-          if (this.idUser !== null) {
-            // console.log('ID de usuario logueado:', this.idUser);
-          } else {
-            this.idUser = '0';
-            console.error('No se encontró el usuario logueado en la lista de usuarios');
-          }
-        });
-
-      }
-    });
+  obtenerUsuario() {
+    this.SharedDataService.usuario$.subscribe(usuario => this.usuario = usuario);
+    this.SharedDataService.idUser$.subscribe(id => this.idUser = id ?? '');
+    this.SharedDataService.username$.subscribe(name => this.username = name ?? '');
+    this.SharedDataService.role$.subscribe(role => this.role = role ?? '');
+    this.SharedDataService.roles$.subscribe(roles => this.roles = roles);
+    console.log('ID de usuario:', this.idUser);
+    console.log('Nombre de usuario:', this.username);
+    console.log('Rol de usuario:', this.role);
+    console.log('Roles de usuario:', this.roles);
   }
+
+
+
 }

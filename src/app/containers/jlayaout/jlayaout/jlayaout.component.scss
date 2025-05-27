@@ -5,49 +5,88 @@
   height: 100vh;
 }
 
-/* Header */
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: linear-gradient(90deg, #4a90e2, #357ABD); /* degradado azul suave */
-  color: #f0f4f8; /* blanco muy suave */
-  padding: 12px 24px;
-  box-shadow: 0 2px 6px rgba(53, 122, 189, 0.3); /* sombra suave */
-  border-radius: 0 0 12px 12px; /* bordes redondeados abajo */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(90deg, #060606, #265532);
+    padding: 10px 20px;
+    color: rgb(202, 193, 193);
+      border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 0; /* esquina inferior izquierda sin redondear */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-bottom: 4px solid #334712; /* <-- Borde inferior con color */
+    
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .logo-image {
+    height: 60px;
+    width: auto;
+  }
+
+  .header-left h1 {
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .user-info {
+    text-align: center;
+    font-size: 1.2rem;
+  }
+
+  .sigin:hover{
+    color: #91CC26; /* Cambia el color al pasar el mouse */
+    cursor: pointer;
+  }
+
+  .role {
+    font-size: 0.9rem;
+    color: #ffffff;
+  font-size: 1.1rem;
+  margin-left: 5px;
+
+}
+.rol-label {
+  color: #000000;        /* Verde fuerte */
+  font-weight: bold;
+  font-size:  1.0rem 
+ 
 }
 
-/* Parte izquierda del header */
-.header-left {
-  display: flex;
-  align-items: center;
+.rol-variable {
+  color: #ffffff;        /* Verde oscuro */
+  font-weight: bold;
+ text-transform: capitalize;
+  font-size:  1.0rem  
 }
 
-/* Imagen o icono */
-.image-placeholder {
-  width: 44px;
-  height: 44px;
-  background-color: #d9e6f7; /* azul muy claro */
-  border-radius: 8px;
-  margin-right: 14px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 0 8px rgba(74, 144, 226, 0.4); /* sombra muy suave */
-}
-
-/* Parte derecha del header */
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  color: #e6ebf5; /* texto azul muy claro */
-  font-weight: 600;
-  font-size: 0.95rem;
+.username {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.0rem;
+  margin-left: 5px;
+  text-transform: capitalize; /* Primera letra en mayúscula */
 }
 
 
+  
 /* Botón toggle */
 .toggle-btn {
   background: none;
@@ -68,6 +107,7 @@
   display: flex;
   flex: 1;
   overflow: hidden;
+  
 }
 
 /* Sidebar - Menú lateral */
@@ -84,9 +124,10 @@
 
 .sidebar.collapsed .toggle-btn {
   align-self: flex-end; /* Empuja el botón a la derecha */
- color: #007bff;
+ color: #91CC26;
   width: fit-content;
   text-align: right;
+  
 }
 
 /* Secciones del menú */
@@ -97,15 +138,16 @@
 .menu-title {
   font-weight: 700;
   cursor: pointer;
-  color: #105aa3;
+  color: #02693A;
   padding: 8px 0;
-  border-bottom: 1px solid #105aa3;
+  border-bottom: 1px solid #91CC26;
   user-select: none; /* Evita selección de texto al hacer clic */
   transition: background-color 0.3s ease;
 }
 
 .menu-title:hover {
   background-color: rgba(16, 90, 163, 0.1);
+  color: #91CC26;
 }
 
 .menu-items {
@@ -118,20 +160,20 @@
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: #000000;
+  color: #3E8F34;
   padding: 6px 0;
   transition: color 0.2s ease;
   border-radius: 4px;
 }
 
 .menu-items li a:hover {
-  color: #105aa3;
+  color: #02693A;
   background-color: rgba(16, 90, 163, 0.1);
 }
 
 .menu-icon {
   margin-right: 10px;
-  color: #007bff;
+  color: #91CC26;
 }
 
 /* Contenido principal */
@@ -148,11 +190,11 @@
 
 .sidebar {
   width: 250px;
-  background: linear-gradient(135deg, #f0f4f9, #d9e2ec); /* fondo suave degradado azul claro */
+  background: linear-gradient(90deg, #060706, #0C150F); /* fondo suave degradado azul claro */
   padding: 15px 20px;
   transition: all 0.3s ease;
   overflow: hidden;
-  border-radius: 8px;
+  
   box-shadow: 0 2px 8px rgba(16, 90, 163, 0.1); /* sombra muy suave azul */
   display: flex;
   flex-direction: column;
@@ -165,7 +207,7 @@
   margin-bottom: 10px;
   width: fit-content;
   text-align: left;
-  color:  #007BFF;
+  color:  #02693A;
   background: none;
   border: none;
   font-size: 1.5rem;
@@ -174,12 +216,12 @@
 }
 
 .sidebar .toggle-btn:hover {
-  color: #007BFF;
+  color:#91CC26;
 }
 
 /* Sidebar colapsado */
 .sidebar.collapsed {
-  width: 60px;
+  width: 30px;
 }
 
 /* Botón toggle alineado a la derecha cuando está colapsado */
@@ -188,7 +230,7 @@
   margin-bottom: 10px;
   width: fit-content;
   text-align: right;
-  color: #007BFF;
+  color: #91CC26;
 }
 
 /* Ocultar títulos y items en sidebar colapsado */
@@ -204,3 +246,4 @@
   overflow-y: auto; /* scroll vertical */
   border-radius: 0 0 12px 12px; /* bordes redondeados abajo */
 }
+
