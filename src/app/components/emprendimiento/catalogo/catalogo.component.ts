@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductoService } from '../../../app-core/servicios/producto.service';
 import { EmprendimientoService } from '../../../app-core/servicios/emprendimiento.service';
+
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -79,7 +80,7 @@ export class CatalogoComponent implements OnInit {
   cargarProductos(): void {
     this.productoService.getProductos().subscribe(data => {
       console.log('Productos obtenidos desde el backend:', data);
-      this.productos = data;
+      this.productos = data as any[];
     });
   }
 

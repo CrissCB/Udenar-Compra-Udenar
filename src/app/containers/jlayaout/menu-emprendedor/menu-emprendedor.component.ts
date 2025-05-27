@@ -2,7 +2,6 @@
 import { Component, Output, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormEmprendimientoComponent } from '../../../components/emprendimiento/form-emprendimiento/form-emprendimiento.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../../auth/auth.service';
@@ -13,7 +12,7 @@ import { Subject } from 'rxjs';
   selector: 'app-menu-emprendedor',
   templateUrl: './menu-emprendedor.component.html',
   styleUrl: './menu-emprendedor.component.scss',
-  imports: [CommonModule, FormEmprendimientoComponent, ]
+  imports: [CommonModule,  ]
 
 })
 
@@ -99,7 +98,6 @@ export class MenuEmprendedorComponent {
     this.selectedOption = key;
     this.optionSelected.emit(key);  // Emitimos la opción seleccionada
   }
-
 
   getIcon(option: string): string {
     switch (option.toLowerCase()) {
