@@ -8,17 +8,16 @@
   </div>
 
   <div class="header-right">
-
-    <div class="user-info">
-      <strong>
-        <i class="fas fa-user-circle"></i>
-        <span class="username">{{ this.username || 'Usuario' }}</span>
-      </strong>
-      <div class="role">
-        <span class="rol-label">Rol:</span>
-        <span class="rol-variable">{{ role || 'Sin rol' }}</span>
-      </div>
-      <div class="role"><a (click)="cerrarSesion()"><i class="fas fa-sign-out-alt"></i></a></div>
+      <div class="user-info">
+        <strong>
+          <i class="fas fa-user-circle"></i>
+          <span class="username">{{ this.username || 'Usuario' }}</span>
+        </strong>
+        <div class="role">
+          <span class="rol-label">Rol:</span>
+          <span class="rol-variable">{{ role || 'Sin rol' }}</span>
+        </div>
+        <div class="role sigin"><a (click)="cerrarSesion()"><i class="fas fa-sign-out-alt"></i></a></div>
     </div>
   </div>
 </div>
