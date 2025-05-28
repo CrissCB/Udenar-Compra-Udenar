@@ -23,7 +23,7 @@
     <div class="dashboard-content">
 
       <app-form-emprendimiento *ngIf="selectedOption === 'emprendimiento-registrar'"></app-form-emprendimiento>
-      <app-form-emprendimiento *ngIf="selectedOption === 'emprendimiento-editar'" [modoEdicion]="true" [idEmprendimiento]="idEmprendimiento"></app-form-emprendimiento>
+      <app-form-emprendimiento *ngIf="selectedOption === 'emprendimiento-editar'" [modoEdicion]="true" ></app-form-emprendimiento>
       <app-form-producto *ngIf="selectedOption === 'producto-registrar'"></app-form-producto>
       <app-catalogo *ngIf="selectedOption === 'producto-editar'"></app-catalogo>
       <div *ngIf="!selectedOption">Seleccione una opción del menú</div>
