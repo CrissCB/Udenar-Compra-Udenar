@@ -57,13 +57,9 @@ export class MenuEmprendedorComponent {
     {
       title: 'FERIAS',
       open: false,
-      subitems: ['Participar', 'Editar', 'Convocatorias']
+      subitems: ['Participar']
     },
-    {
-      title: 'MANUAL',
-      open: false,
-      subitems: []
-    }
+
   ];
 
   toggleSidebar() {

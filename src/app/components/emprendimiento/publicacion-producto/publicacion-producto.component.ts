@@ -12,6 +12,7 @@ export class PublicacionProductoComponent {
 
   publicarProducto() { }
   cancelarPublicacionProducto() { }
+  cargarImagenPublicacionProducto(){}
 
   // productos.component.ts
 

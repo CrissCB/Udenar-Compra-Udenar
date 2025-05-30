@@ -10,10 +10,11 @@ import { MenuLiderComponent } from '../../containers/jlayaout/menu-lider/menu-li
 import { SharedDataService } from '../../app-core/servicios/shared-data.service';
 import { PublicacionComponent } from '../emprendimiento/publicacion/publicacion.component';
 import {PublicacionProductoComponent} from '../emprendimiento/publicacion-producto/publicacion-producto.component'
+import { FeriasParticiparComponent } from '../emprendimiento/ferias-participar/ferias-participar.component';
 import { NgIf } from '@angular/common';
 @Component({
   selector: 'app-dashboard',
-  imports: [JlayaoutComponent, MenuEmprendedorComponent, FormEmprendimientoComponent, CommonModule,FormProductoComponent,CatalogoComponent, MenuLiderComponent, PublicacionComponent,NgIf,PublicacionProductoComponent],
+  imports: [JlayaoutComponent, MenuEmprendedorComponent, FormEmprendimientoComponent, CommonModule,FormProductoComponent,CatalogoComponent, MenuLiderComponent, PublicacionComponent,NgIf,PublicacionProductoComponent, FeriasParticiparComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })

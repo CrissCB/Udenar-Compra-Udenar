@@ -1,6 +1,6 @@
 <!-- Card de emprendimiento -->
 <div class="publicacion-container">
- 
+
   <div class="card emprendimiento-card shadow-sm p-4 mb-4 border border-success border-2 rounded-4">
     <div class="row g-4 align-items-start">
       <!-- Columna Izquierda (dividida en 2 columnas internas) -->
@@ -20,7 +20,7 @@
             <h4 class="mb-2">
               <strong>Conoce nuestro emprendimiento</strong><br>
             </h4>
-            <p class="descripcion">   {{ descripcion }}</p>
+            <p class="descripcion"> {{ descripcion }}</p>
 
             <h4 class="mb-2 "><strong>Categoría:</strong> {{ categoria }}</h4>
             <h4 class="mb-2"><strong>Marca:</strong> {{ marca }}</h4>
@@ -52,11 +52,13 @@
 
   <!-- Acciones para la publicación -->
   <div class="text-end">
-    <button class="btn btn-primary" type="submit">
+    <button class="btn btn-primary me-2" title="Cargar imagen"><i class="fa-solid fa-file-arrow-up" ></i>Imagen</button>
+    <button class="btn btn-primary me-2" type="submit">
       <i class="fas fa-upload me-2"></i> Publicar
     </button>
     <button class="btn btn-danger" type="submit">
       <i class="fas fa-xmark me-2"></i> Cancelar
     </button>
   </div>
+
 </div>
