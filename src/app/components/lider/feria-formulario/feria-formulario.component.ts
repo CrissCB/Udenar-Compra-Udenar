@@ -24,8 +24,7 @@ export class FormFeriaComponent implements OnInit {
       modalidad: ['', Validators.required],
       localidad: ['', Validators.required],
       estado: ['pendiente', Validators.required]
-
-    });
+  }, { validators: this.validarFechas() });
   }
 
   registrar(): void {
@@ -60,4 +59,18 @@ export class FormFeriaComponent implements OnInit {
     mañana.setDate(mañana.getDate() + 1);
     return mañana.toISOString().split('T')[0];
   }
+
+  validarFechas() {
+  return (formGroup: FormGroup) => {
+    const inicio = formGroup.get('fecha_inicio')?.value;
+    const fin = formGroup.get('fecha_fin')?.value;
+
+    if (inicio && fin && fin < inicio) {
+      formGroup.get('fecha_fin')?.setErrors({ fechaInvalida: true });
+    } else {
+      formGroup.get('fecha_fin')?.setErrors(null);
+    }
+  };
+}
+
 }

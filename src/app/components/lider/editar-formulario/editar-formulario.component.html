@@ -2,8 +2,12 @@
   <h2>Editar información Líder</h2>
   <form [formGroup]="liderForm" (ngSubmit)="registrar()">
 
-    <label for="idFeria">Identificación de Feria:</label>
-    <input type="text" id="idFeria">
+
+    <label for="idFeria">Modalidad:</label>
+      <select id="feria_escogida" formControlName="feria_escogida">
+          <option value="" disabled selected>Selecciona una feria</option>
+          <option value="id_feria_opcion">id_feria001 Agricola</option>
+    </select>
 
     <label for="nombre">Nombre:</label>
     <input type="text" id="nombre" formControlName="nombre">
