@@ -26,6 +26,12 @@
       <app-form-emprendimiento *ngIf="selectedOption === 'emprendimiento-editar'" [modoEdicion]="true" ></app-form-emprendimiento>
       <app-form-producto *ngIf="selectedOption === 'producto-registrar'"></app-form-producto>
       <app-catalogo *ngIf="selectedOption === 'producto-editar'"></app-catalogo>
+      <app-form-feria *ngIf="selectedOption === 'ferias-registrar'"></app-form-feria>
+      <app-editar-lider *ngIf="selectedOption === 'ferias-editar'"></app-editar-lider>
+      <app-convocatoria-formulario *ngIf="selectedOption === 'ferias-convocar'"></app-convocatoria-formulario>
+      <app-publicacion-formulario *ngIf="selectedOption === 'publicaciones-ver'"></app-publicacion-formulario>
+      <app-emprendedor-formulario *ngIf="selectedOption === 'emprendedores-solicitudes'"></app-emprendedor-formulario>
+      
       <div *ngIf="!selectedOption">Seleccione una opción del menú</div>
     </div>
   </div>

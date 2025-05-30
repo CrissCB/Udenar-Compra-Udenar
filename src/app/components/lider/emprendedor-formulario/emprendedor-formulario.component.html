@@ -1,0 +1,52 @@
+<h2>LISTADO DE INSCRITOS</h2>
+<h4>Feria Agrícola</h4>
+
+<table class="tabla-inscritos">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Estado</th>
+      <th>Fecha de solicitud</th>
+      <th>Acción</th>
+      <th>ACCION</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Id_79</td>
+      <td>Maria Camila</td>
+      <td>Activo</td>
+      <td>23 de mayo</td>
+      <td><button class="btn-ver">VER</button></td>
+      <td>
+        <button class="btn-aceptar" (click)="abrirModal('aceptar')">Aceptar</button>
+        <button class="btn-rechazar" (click)="abrirModal('rechazar')">Rechazar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Modal ACEPTAR -->
+<div class="modal" *ngIf="mostrarModalAceptar" (click)="cerrarModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-icon">⚠️</div>
+    <p>¿Está seguro de aceptar la participación del emprendedor <strong>"Maria Camila"</strong> a la <strong>"Feria Agrícola"</strong>?</p>
+    <div class="modal-buttons">
+      <button (click)="cerrarModal()">Cancelar</button>
+      <button>Aceptar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal RECHAZAR -->
+<div class="modal" *ngIf="mostrarModalRechazar" (click)="cerrarModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-icon">⚠️</div>
+    <p>¿Está seguro de rechazar la participación del emprendedor <strong>"Maria Camila"</strong> en la <strong>"Feria Agrícola"</strong>?</p>
+    <div class="modal-buttons">
+      <button (click)="cerrarModal()">Cancelar</button>
+      <button>Aceptar</button>
+    </div>
+  </div>
+</div>
