@@ -30,17 +30,38 @@
     margin-top: 1.5rem;
     display: flex;
     justify-content: space-between;
+    gap:20px;
 
-    button {
-      padding: 0.6rem 1.2rem;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
+  button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
 
-      &:nth-child(1) { background-color: #e0e0e0; }
-      &:nth-child(2) { background-color: #d9edf7; }
-      &:nth-child(3) { background-color: #4caf50; color: white; }
+  &:nth-child(1) {
+    background-color: #ff0000af;
+    &:hover {
+      background-color: #ac3333cb;
     }
   }
+
+  &:nth-child(2) {
+    background-color: #d9edf7;
+    &:hover {
+      background-color: #bce4f1;
+    }
+  }
+
+  &:nth-child(3) {
+    background-color: #4caf50;
+    color: white;
+    &:hover {
+      background-color: #43a047;
+    }
+  }
+}
+
+}
+
 }

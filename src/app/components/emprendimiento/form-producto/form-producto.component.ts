@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -19,14 +19,16 @@ import { SharedDataService } from '../../../app-core/servicios/shared-data.servi
     ReactiveFormsModule]
 })
 export class FormProductoComponent implements OnInit {
-
-  // @Input() idEmprendimiento!: number;
-  nombre_emprendimiento: string = '';
+  @Input() producto: any = null;
+  @Input() categorias: any[] = [];
+  @Input() nombre_emprendimiento: string = '';
+  @Input() modoEdicion: boolean = false;
+  @Output() onCancel = new EventEmitter();
+  @Output() onGuardar = new EventEmitter();
+  
+  productoForm: FormGroup;
   idEmprendimiento: string = '';
   id_usuario: string = '';
-  productoForm!: FormGroup;
-  modoEdicion = false;
-  categorias: CategoriaProducto[] = []; // Esto debería llenarse desde tu servicio
 
   constructor(
     private fb: FormBuilder,
@@ -34,7 +36,22 @@ export class FormProductoComponent implements OnInit {
     private router: Router,
     private emprendimientoService: EmprendimientoService,
     private SharedDataService: SharedDataService
-  ) { }
+  ) { 
+
+    this.productoForm = this.fb.group({
+      nombre_emprendimiento: [''],
+      nombre: [''],
+      detalle: [''],
+      precio: [''],
+      stock: [''],
+      fecha_elaboracion: [''],
+      fecha_vencimiento: [''],
+      talla: [''],
+      codigo_qr: [''],
+      id_cat: ['']
+    });
+
+  }
 
   ngOnInit(): void {
     this.productoForm = this.fb.group({
@@ -75,28 +92,14 @@ export class FormProductoComponent implements OnInit {
     });
   }
 
-  registrar(): void {
-    if (this.productoForm.invalid) {
-      this.productoForm.markAllAsTouched();
-      return;
-    }
-
-    const producto = {
-      ...this.productoForm.value,
-      id_emprendimiento: this.idEmprendimiento
-    };
-
-    this.productoService.crearProducto(producto).subscribe({
-      next: res => {
-        alert('Producto registrado exitosamente');
-        this.router.navigate(['/productos']); // O redirige según tu flujo
-      },
-      error: err => {
-        console.error('Error al registrar producto:', err);
-        alert('Error al registrar el producto');
-      }
-    });
+  registrar() {
+  if (this.modoEdicion) {
+    // Lógica para editar el producto
+    this.onGuardar.emit(this.productoForm.value);
+  } else {
+    // Lógica para registrar nuevo producto
   }
+}
 
   limpiarCampos(): void {
     this.productoForm.reset();
@@ -105,4 +108,10 @@ export class FormProductoComponent implements OnInit {
   cancelar(): void {
     this.router.navigate(['/productos']); // Ajusta a la ruta de retorno deseada
   }
+
+ngOnChanges(changes: SimpleChanges) {
+  if (changes['producto'] && this.producto) {
+    this.productoForm.patchValue(this.producto);
+  }
+}
 }

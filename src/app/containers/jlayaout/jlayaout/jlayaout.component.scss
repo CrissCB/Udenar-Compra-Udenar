@@ -6,14 +6,15 @@
     background: linear-gradient(90deg, #060606, #265532);
     padding: 10px 20px;
     color: rgb(202, 193, 193);
-      border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
-  border-bottom-left-radius: 0; /* esquina inferior izquierda sin redondear */
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0; /* esquina inferior izquierda sin redondear */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       border-bottom: 4px solid #334712; /* <-- Borde inferior con color */
     
   }
+
 
   .header-left {
     display: flex;
@@ -22,12 +23,12 @@
   }
 
   .logo-image {
-    height: 60px;
+    height: 80px;
     width: auto;
   }
 
   .header-left h1 {
-    font-size: 1.75rem;
+    font-size: 2.0rem;
     font-weight: bold;
     margin: 0;
   }
