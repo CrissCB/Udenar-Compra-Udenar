@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductoService } from '../../../app-core/servicios/producto.service';
 import { EmprendimientoService } from '../../../app-core/servicios/emprendimiento.service';
@@ -6,12 +6,12 @@ import { EmprendimientoService } from '../../../app-core/servicios/emprendimient
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import {  FormProductoComponent} from '../form-producto/form-producto.component';
 @Component({
   selector: 'app-catalogo',
   styleUrls: ['./catalogo.component.scss'],
   templateUrl: './catalogo.component.html',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormProductoComponent],
 })
 export class CatalogoComponent implements OnInit {
 
@@ -21,6 +21,8 @@ export class CatalogoComponent implements OnInit {
   modoEdicion: boolean = false;
   idProductoEditar: number | null = null;
   idEmprendimiento = 1; // Asigna este valor dinámicamente si es necesario
+  nombreEmprendimiento = 'Mi Emprendimiento';
+  productoSeleccionado: any = null;
 
   constructor(
     private productoService: ProductoService,
@@ -30,7 +32,7 @@ export class CatalogoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //productos de prueba
+    //Datos para probar la vista
     this.productos = [
       {
         id: 1,
@@ -62,7 +64,6 @@ export class CatalogoComponent implements OnInit {
     });
     this.cargarProductos();
     this.cargarCategorias();
-
     this.productoForm = this.fb.group({
       id_emprendimiento: [this.idEmprendimiento],
       nombre: ['', Validators.required],
@@ -77,6 +78,28 @@ export class CatalogoComponent implements OnInit {
     });
   }
 
+
+  seleccionarProducto(producto: any) {
+    this.productoSeleccionado = { ...producto }; // Clon para no modificar directamente
+  }
+
+  cancelarEdicion() {
+    this.productoSeleccionado = null;
+  }
+
+
+  guardarEdicion(productoActualizado: any) {
+    // Lógica para actualizar el producto (API o local)
+    // Ejemplo:
+    const index = this.productos.findIndex(p => p.id === productoActualizado.id);
+    if (index !== -1) {
+      this.productos[index] = { ...productoActualizado };
+    }
+
+    this.productoSeleccionado = null;
+  }
+
+
   cargarProductos(): void {
     this.productoService.getProductos().subscribe(data => {
       console.log('Productos obtenidos desde el backend:', data);
@@ -87,24 +110,6 @@ export class CatalogoComponent implements OnInit {
   cargarCategorias(): void {
     this.emprendimientoService.obtenerCategoriaProducto().subscribe(data => {
       this.categorias = data;
-    });
-  }
-
-
-  seleccionarProducto(producto: any): void {
-    this.modoEdicion = true;
-    this.idProductoEditar = producto.id;
-
-    this.productoForm.patchValue({
-      nombre: producto.nombre,
-      detalle: producto.detalle,
-      precio: producto.precio,
-      stock: producto.stock,
-      fecha_elaboracion: producto.fecha_elaboracion,
-      fecha_vencimiento: producto.fecha_vencimiento,
-      talla: producto.talla,
-      codigo_qr: producto.codigo_qr,
-      id_cat: producto.id_cat
     });
   }
 
@@ -138,20 +143,7 @@ export class CatalogoComponent implements OnInit {
 
 
   eliminarProducto(producto: any): void {
-    const confirmacion = confirm(`¿Estás seguro de eliminar el producto "${producto.nombre}"?`);
-
-    if (confirmacion) {
-      this.productoService.eliminarProducto(producto.id).subscribe({
-        next: () => {
-          alert('Producto eliminado correctamente');
-          this.cargarProductos(); // Vuelve a cargar la lista actualizada
-        },
-        error: (err) => {
-          console.error('Error al eliminar producto', err);
-          alert('Ocurrió un error al eliminar el producto');
-        }
-      });
-    }
+  
   }
 
 

@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Italianno&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Italianno&family=Lilita+One&display=swap');
+.publicacion-container {
+  background-color: #f8f9fa;
+  padding: 2rem;
+  border-radius: 1rem;
+}
+
+
+
+.title {
+  font-size: 1.9rem;
+  font-family: "Bebas Neue", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  color: #2a7a2a; 
+  margin-bottom: 1rem;
+  letter-spacing: 1.9px;
+  justify-content: center;
+}
+
+.descripcion {
+  font-family: 'Merriweather', serif;
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+strong {
+  color: #00695c;
+}
+
+.perfil .avatar {
+  background-color: #e0f7fa;
+  color: #00695c;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.text-end{
+
+  gap:60px;
+}
+
+h4 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: #555;
+      
+    }
+
+.nombre {
+  font-weight: 600;
+  color: #37474f;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.5rem;
+}
+
+.social-icons i {
+  font-size: 1.25rem;
+  color: #607d8b;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.social-icons i:hover {
+  color: #00695c;
+}
+
+.qr-code img {
+  border: 2px solid #00695c;
+  border-radius: 0.5rem;
+  padding: 5px;
+}
+
+.btn-primary {
+  background-color: #00695c;
+  border-color: #00695c;
+  font-weight: 600;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.5rem;
+}
+
+.btn-primary:hover {
+  background-color: #004d40;
+  border-color: #004d40;
+}
+
+.btn-danger {
+  background-color: #c62828;
+  border-color: #c62828;
+  font-weight: 600;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.5rem;
+}
+
+.btn-danger:hover {
+  background-color: #b71c1c;
+  border-color: #b71c1c;
+}
+
+
+.img-emprendimiento {
+  max-width: 200px;
+  height: auto;
+}
+
+.img-emprendimiento:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+}
+
+.emprendimiento-card {
+
+  background-size: cover;
+  background-position: center;
+  border: 2px solid #a3d9a5;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.emprendimiento-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}

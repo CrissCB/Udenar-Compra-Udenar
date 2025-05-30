@@ -3,11 +3,11 @@
 
     <form [formGroup]="productoForm" (ngSubmit)="registrar()">
 
-        <label for="id_emprendimiento">ID Emprendimiento:</label>
-        <input type="text" id="id_emprendimiento" formControlName="id_emprendimiento" [value]="idEmprendimiento"
-            readonly>
+        <label for="nombre_emprendimiento">Nombre Emprendimiento:</label>
+        <input type="text" id="nombre_emprendimiento" formControlName="nombre_emprendimiento"
+            [value]="nombre_emprendimiento" readonly>
 
-        <label for="nombre">Nombre:</label>
+        <label for="nombre">Nombre Producto:</label>
         <input type="text" id="nombre" formControlName="nombre">
 
         <label for="detalle">Detalle:</label>
@@ -42,8 +42,9 @@
 
         <div class="button-group">
             <button type="button" (click)="cancelar()">Cancelar</button>
-            <button type="button" (click)="limpiarCampos()">Limpiar Campos</button>
-            <button type="submit">{{ modoEdicion ? 'Guardar Cambios' : 'Registrar' }}</button>
+            <button type="button" (click)="limpiarCampos()"><i class="fas fa-eraser"></i>Limpiar Campos</button>
+            <button type="submit">{{ modoEdicion ? 'Guardar Cambios' : 'Registrar'}}</button>
         </div>
+
     </form>
 </div>

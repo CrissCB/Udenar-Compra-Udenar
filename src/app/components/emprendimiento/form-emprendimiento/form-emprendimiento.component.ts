@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,11 +14,13 @@ import { SharedDataService } from '../../../app-core/servicios/shared-data.servi
   styleUrls: ['./form-emprendimiento.component.scss']
 })
 
+
 export class FormEmprendimientoComponent implements OnInit {
+  @Input() modoEdicion: boolean = false;
+  @Input() idEmprendimiento: string = '';
+
   emprendimientoForm!: FormGroup;
   categorias: Categoria[] = [];
-  modoEdicion: boolean = false;
-  idEmprendimiento: string = '';
   selectedOption: string = '';
   usuario: any[] = [];
   identificacion: any[] = [];
@@ -39,25 +41,20 @@ export class FormEmprendimientoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.inicializarFormulario();
+    this.obtenerUsuario();
+    this.obternerCategoriaEmprendimiento();
+  }
+
+  inicializarFormulario(): void {
     this.emprendimientoForm = this.fb.group({
       nombre: ['', Validators.required],
       marca: [''],
       id_cat: ['', Validators.required],
       id_usuario: [{ value: this.idUser, disabled: true }],
       descripcion: ['', Validators.required],
-      estado: ['A', Validators.required], 
+      estado: ['A', Validators.required],
       fechaInscripcion: [{ value: new Date().toISOString().substring(0, 10), disabled: true }],
-    });
-
-    this.obtenerUsuario();
-    this.obternerCategoriaEmprendimiento();
-
-    this.route.params.subscribe(params => {
-      if (params['id']) {
-        this.modoEdicion = true;
-        this.idEmprendimiento = params['id'];
-        this.cargarDatos(this.idEmprendimiento);
-      }
     });
   }
 
@@ -67,12 +64,6 @@ export class FormEmprendimientoComponent implements OnInit {
       marca: '',
       categoria: '',
       descripcion: ''
-    });
-  }
-
-  cargarDatos(id: string) {
-    this.emprendimientoService.obtenerPorId(id).subscribe(data => {
-      this.emprendimientoForm.patchValue(data);
     });
   }
 
@@ -125,6 +116,5 @@ export class FormEmprendimientoComponent implements OnInit {
     console.log('Rol de usuario:', this.role);
     console.log('Roles de usuario:', this.roles);
   }
-
 
 }

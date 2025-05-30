@@ -1,78 +1,45 @@
 <div class="form-container">
   <h2 class="titulo">Productos registrados</h2>
 
-  <table class="tabla-productos">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Categoría</th>
-        <th>Estado</th>
-        <th>Acción</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let producto of productos">
-        <td>{{ producto.id }}</td>
-        <td>{{ producto.nombre }}</td>
-        <td>{{ producto.categoria }}</td>
-        <td>{{ producto.estado }}</td>
-        <td>
-          <a href="#" (click)="seleccionarProducto(producto)" title="Editar">
-            <i class="fas fa-edit" icono-editar></i>
-          </a>
-          &nbsp;|&nbsp;
-          <a href="#" (click)="eliminarProducto(producto)" title="Eliminar">
-            <i class="fas fa-trash-alt" icono-eliminar></i>
-          </a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+
+
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered align-middle">
+      <thead class="table-light">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Categoría</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of productos">
+          <td>{{ producto.id }}</td>
+          <td>{{ producto.nombre }}</td>
+          <td>{{ producto.categoria }}</td>
+          <td>{{ producto.estado }}</td>
+          <td>
+
+            <div class="d-flex flex-wrap gap-2">
+              <a href="#" (click)="seleccionarProducto(producto)" class="btn btn-sm btn-outline-primary"title="Editar">
+                <i class="fas fa-edit" icono-editar></i>
+              </a>
+           
+              <a href="#" (click)="eliminarProducto(producto)"  class="btn btn-sm btn-outline-danger" title="Eliminar">
+                <i class="fas fa-trash-alt" icono-eliminar></i>
+              </a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
 
   <!-- FORMULARIO CONDICIONAL -->
-  <div *ngIf="modoEdicion" class="form-edicion">
-    <h2>Edición de Producto</h2>
-
-    <form [formGroup]="productoForm" (ngSubmit)="registrar()">
-      <label for="id_emprendimiento">ID Emprendimiento:</label>
-      <input type="text" id="id_emprendimiento" [value]="idEmprendimiento" disabled>
-
-      <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" formControlName="nombre">
-
-      <label for="detalle">Detalle:</label>
-      <textarea id="detalle" formControlName="detalle" rows="4"></textarea>
-
-      <label for="precio">Precio:</label>
-      <input type="number" id="precio" formControlName="precio">
-
-      <label for="stock">Stock:</label>
-      <input type="number" id="stock" formControlName="stock">
-
-      <label for="fecha_elaboracion">Fecha de Elaboración:</label>
-      <input type="date" id="fecha_elaboracion" formControlName="fecha_elaboracion">
-
-      <label for="fecha_vencimiento">Fecha de Vencimiento:</label>
-      <input type="date" id="fecha_vencimiento" formControlName="fecha_vencimiento">
-
-      <label for="talla">Talla:</label>
-      <input type="text" id="talla" formControlName="talla">
-
-      <label for="codigo_qr">Código QR:</label>
-      <input type="text" id="codigo_qr" formControlName="codigo_qr">
-
-      <label for="categoria">Categoría:</label>
-      <select id="categoria" formControlName="id_cat">
-        <option value="" selected>Seleccione</option>
-        <option *ngFor="let cat of categorias" [value]="cat.id_cat">{{ cat.nombre }}</option>
-      </select>
-
-      <div class="button-group">
-        <button type="button" (click)="cancelar()">Cancelar</button>
-        <button type="button" (click)="limpiarCampos()">Limpiar Campos</button>
-        <button type="submit">Guardar Cambios</button>
-      </div>
-    </form>
-  </div>
+  <app-form-producto *ngIf="productoSeleccionado" [producto]="productoSeleccionado" [modoEdicion]="true"
+    (onCancel)="cancelarEdicion()" (onGuardar)="guardarEdicion($event)"></app-form-producto>
 </div>

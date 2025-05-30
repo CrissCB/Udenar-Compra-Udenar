@@ -37,6 +37,10 @@ export class SharedDataService {
     this.rolesSubject.next(roles);
   }
 
+  getRol(): string | null {
+    return this.roleSubject.getValue();
+  }
+
   // Método para limpiar todos los datos al hacer logout
   clearUserData(): void {
     this.usuarioSubject.next(null);
