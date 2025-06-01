@@ -1,0 +1,46 @@
+<div class="form-container">
+  <h2>Registro de Feria</h2>
+  <form [formGroup]="FormFeriaComponent" (ngSubmit)="registrar()">
+    
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" formControlName="nombre" required>
+
+    <label for="modalidad">Modalidad:</label>
+    <select id="modalidad" formControlName="modalidad" required>
+      <option value="" disabled>Selecciona un estado</option>
+      <option value="pendiente">Pendiente</option>
+      <option value="activo">Activo</option>
+      <option value="finalizado">Finalizado</option>
+    </select>
+
+
+    <label for="fechaInicio">Fecha Inicio:</label>
+    <input type="date" id="fechaInicio" formControlName="fecha_inicio" required>
+
+    <label for="fechaCierre">Fecha Cierre:</label>
+    <input type="date" id="fechaCierre" formControlName="fecha_fin" required>
+
+
+    <label for="descripcion">Descripción:</label>
+    <textarea id="descripcion" formControlName="descripcion" rows="4" cols="50" placeholder="Describe tu emprendimiento..."></textarea>
+
+    <label for="localidad">Localidad:</label>
+    <input type="text" id="localidad" formControlName="localidad" required>
+
+    <label for="estado">Estado:</label>
+    <select id="estado" formControlName="estado" required>
+      <option value="pendiente">Pendiente</option>
+      <option value="activo">Activo</option>
+      <option value="finalizado">Finalizado</option>
+    </select>
+
+
+    <div class="button-group">
+      <button type="submit">Registrar</button>
+      <button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+</div>
+<div *ngIf="FormFeriaComponent.invalid && FormFeriaComponent.touched">
+  <p style="color: red;">Todos los campos obligatorios deben estar completos.</p>
+</div>

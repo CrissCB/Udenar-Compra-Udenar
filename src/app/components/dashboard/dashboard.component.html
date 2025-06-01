@@ -31,6 +31,14 @@
       <app-catalogo *ngIf="selectedOption === 'producto-editar'"></app-catalogo>
       <app-publicacion-producto *ngIf="selectedOption === 'producto-publicar'"></app-publicacion-producto>
       <app-ferias-participar *ngIf="selectedOption === 'ferias-participar'"></app-ferias-participar>
+      
+      
+      <app-convocatoria-formulario *ngIf="selectedOption === 'ferias-convocar'"></app-convocatoria-formulario>
+      <app-editar-lider *ngIf="selectedOption === 'ferias-editar'"></app-editar-lider>
+      <app-emprendedor-formulario *ngIf="selectedOption === 'emprendedores-solicitudes'"></app-emprendedor-formulario>
+      <app-form-feria *ngIf="selectedOption === 'ferias-registrar'"></app-form-feria>  
+      <app-publicacion-formulario *ngIf="selectedOption === 'publicaciones-ver'"></app-publicacion-formulario>  
+
       <div *ngIf="!selectedOption">Seleccione una opción del menú</div>
     </div>
   </div>

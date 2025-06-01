@@ -11,10 +11,18 @@ import { SharedDataService } from '../../app-core/servicios/shared-data.service'
 import { PublicacionComponent } from '../emprendimiento/publicacion/publicacion.component';
 import {PublicacionProductoComponent} from '../emprendimiento/publicacion-producto/publicacion-producto.component'
 import { FeriasParticiparComponent } from '../emprendimiento/ferias-participar/ferias-participar.component';
+import {ConvocatoriaFormularioComponent} from '../lider/convocatoria-formulario/convocatoria-formulario.component';
+import {editarLiderForm} from '../lider/editar-formulario/editar-formulario.component'
+import {EmprendedorFormularioComponent} from '../lider/emprendedor-formulario/emprendedor-formulario.component'
+import {FormFeriaComponent} from '../lider/feria-formulario/feria-formulario.component'
+import {FeriasComponent} from '../lider/ferias/ferias.component'
+import {PublicacionFormularioComponent} from '../lider/publicacion-formulario/publicacion-formulario.component'
 import { NgIf } from '@angular/common';
 @Component({
   selector: 'app-dashboard',
-  imports: [JlayaoutComponent, MenuEmprendedorComponent, FormEmprendimientoComponent, CommonModule,FormProductoComponent,CatalogoComponent, MenuLiderComponent, PublicacionComponent,NgIf,PublicacionProductoComponent, FeriasParticiparComponent],
+  imports: [JlayaoutComponent, MenuEmprendedorComponent, FormEmprendimientoComponent, CommonModule,FormProductoComponent,CatalogoComponent, MenuLiderComponent, PublicacionComponent,NgIf,PublicacionProductoComponent, FeriasParticiparComponent,ConvocatoriaFormularioComponent,
+    editarLiderForm,EmprendedorFormularioComponent,FormFeriaComponent, FeriasComponent, PublicacionFormularioComponent
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -35,7 +43,3 @@ export class DashboardComponent {
 
 
 }
-
-
-
-
