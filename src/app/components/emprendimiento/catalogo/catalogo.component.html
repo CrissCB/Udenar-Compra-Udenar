@@ -23,13 +23,13 @@
           <td>
 
             <div class="d-flex flex-wrap gap-2">
-              <a href="#" (click)="seleccionarProducto(producto)" class="btn btn-sm btn-outline-primary"title="Editar">
+              <button (click)="seleccionarProducto(producto)" class="btn btn-sm btn-outline-primary" title="Editar">
                 <i class="fas fa-edit" icono-editar></i>
-              </a>
-           
-              <a href="#" (click)="eliminarProducto(producto)"  class="btn btn-sm btn-outline-danger" title="Eliminar">
+              </button>
+
+              <button (click)="eliminarProducto(producto)" class="btn btn-sm btn-outline-danger" title="Eliminar">
                 <i class="fas fa-trash-alt" icono-eliminar></i>
-              </a>
+              </button>
             </div>
           </td>
         </tr>
@@ -41,5 +41,6 @@
 
   <!-- FORMULARIO CONDICIONAL -->
   <app-form-producto *ngIf="productoSeleccionado" [producto]="productoSeleccionado" [modoEdicion]="true"
-    (onCancel)="cancelarEdicion()" (onGuardar)="guardarEdicion($event)"></app-form-producto>
+    (onCancel)="cancelarEdicion()" (onGuardar)="guardarEdicion($event)">
+  </app-form-producto>
 </div>

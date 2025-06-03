@@ -22,6 +22,10 @@
 
         <label for="fecha_elaboracion">Fecha de Elaboración:</label>
         <input type="date" id="fecha_elaboracion" formControlName="fecha_elaboracion">
+        
+        <div *ngIf="fechasInvalidas && productoForm.touched" style="color: red;">
+          {{ fechasInvalidas }}
+        </div>
 
         <label for="fecha_vencimiento">Fecha de Vencimiento:</label>
         <input type="date" id="fecha_vencimiento" formControlName="fecha_vencimiento">

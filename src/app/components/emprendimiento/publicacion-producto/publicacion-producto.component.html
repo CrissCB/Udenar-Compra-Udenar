@@ -24,17 +24,17 @@
           <td>{{ producto.estado }}</td>
           <td>
             <div class="d-flex flex-wrap gap-2">
-              <a href="#" (click)="publicarProducto()" title="Publicar" class="btn btn-sm btn-outline-primary">
+              <button type="button" (click)="publicarProducto()" title="Publicar" class="btn btn-sm btn-outline-primary">
                 <i class="fas fa-upload"></i>
-              </a>
-              <a href="#" (click)="cancelarPublicacionProducto()" title="Cancelar"
-                class="btn btn-sm btn-outline-danger">
+              </button>
+            
+              <button type="button" (click)="cancelarPublicacionProducto()" title="Cancelar" class="btn btn-sm btn-outline-danger">
                 <i class="fas fa-xmark"></i>
-              </a>
-              <a href="#" (click)="cargarImagenPublicacionProducto()" title="Cargar imagen"
-                class="btn btn-sm btn-secondary">
+              </button>
+            
+              <button type="button" (click)="cargarImagenPublicacionProducto()" title="Cargar imagen" class="btn btn-sm btn-secondary">
                 <i class="fa-solid fa-file-arrow-up"></i>
-              </a>
+              </button>
             </div>
           </td>
         </tr>

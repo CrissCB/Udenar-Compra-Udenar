@@ -44,6 +44,9 @@ export class FormEmprendimientoComponent implements OnInit {
     this.inicializarFormulario();
     this.obtenerUsuario();
     this.obternerCategoriaEmprendimiento();
+    if (this.modoEdicion) {
+      this.cargarDatosEmprendimiento();
+    }
   }
 
   inicializarFormulario(): void {
@@ -59,12 +62,16 @@ export class FormEmprendimientoComponent implements OnInit {
   }
 
   limpiarCampos(): void {
-    this.emprendimientoForm.reset({
-      nombre: '',
-      marca: '',
-      categoria: '',
-      descripcion: ''
-    });
+    if (this.modoEdicion) {
+      this.cargarDatosEmprendimiento();
+    } else {
+      this.emprendimientoForm.reset({
+        nombre: '',
+        marca: '',
+        categoria: '',
+        descripcion: ''
+      });
+    }
   }
 
   registrar() {
@@ -79,15 +86,55 @@ export class FormEmprendimientoComponent implements OnInit {
 
       if (this.modoEdicion) {
         // Lógica para editar
-        this.emprendimientoService.actualizarEmprendimiento(datos).subscribe(res => {
-          alert('Emprendimiento actualizado');
-        });
+        this.emprendimientoService.actualizarEmprendimiento(datos).subscribe(
+          res => {
+            alert('Emprendimiento actualizado');
+            this.cargarDatosEmprendimiento();
+          },
+          error => {
+            switch (error.error.code) {
+              case 400:
+                alert(error.error.message + ' Respuesta: ' + JSON.stringify(error.error.data));
+                break;
+
+              case 404:
+                alert('Emprendimiento no encontrado. Por favor, verifique si hay algun emprendimiento registrado con la identificacion del usuario.');
+                break;
+              
+              case 500:
+                alert('Error interno del servidor. Por favor, inténtelo más tarde.');
+                break;
+
+              default:
+                alert('Ocurrió un error inesperado. Por favor, inténtelo más tarde.');
+                break;
+            }
+          }
+        );
       } else {
-        // Registrar nuevo emprendimiento
-        this.emprendimientoService.registrarEmprendimiento(datos).subscribe(res => {
-          alert('Emprendimiento registrado exitosamente');
-          this.emprendimientoForm.reset();
-        });
+        this.emprendimientoService.registrarEmprendimiento(datos).subscribe(
+          res => {
+            alert('Emprendimiento registrado exitosamente');
+            this.limpiarCampos();
+          },
+          error => {
+            // console.error('Error al registrar el emprendimiento:', error);
+
+            switch (error.error.code) {
+              case 400:
+                alert(error.error.message + ' Respuesta: ' + JSON.stringify(error.error.data));
+                break;
+
+              case 500:
+                alert('Error interno del servidor. Por favor, inténtelo más tarde.');
+                break;
+
+              default:
+                alert('Ocurrió un error inesperado. Por favor, inténtelo más tarde.');
+                break;
+            }
+          }
+        );
       }
     } else {
       alert('Por favor, complete todos los campos obligatorios.');
@@ -95,14 +142,49 @@ export class FormEmprendimientoComponent implements OnInit {
   }
 
   cancelar(): void {
-    console.log('Registro cancelado');
+    // console.log('Registro cancelado');
+    if (this.modoEdicion) {
+      this.cargarDatosEmprendimiento();
+    } else {
+      this.limpiarCampos();
+    }
   }
 
   obternerCategoriaEmprendimiento() {
     this.emprendimientoService.obtenerCategoriaEmprendimiento().subscribe(data => {
-      this.categorias = data;
-      console.log('Categorías obtenidas:', this.categorias);
+      this.categorias = data.data;
+      // console.log('Categorías obtenidas:', this.categorias);
     });
+  }
+
+  cargarDatosEmprendimiento() {
+    this.emprendimientoService.obtenerPorId(this.idUser).subscribe(
+      res => {
+        // console.log('Datos del emprendimiento:', res);
+        this.emprendimientoForm.patchValue({
+          nombre: res.data.nombre,
+          marca: res.data.marca,
+          id_cat: res.data.id_cat,
+          descripcion: res.data.descripcion
+        });
+      },
+      error => {
+        alert(error.error.message + ' Respuesta: ' + JSON.stringify(error.error.data));
+      }
+    );
+  }
+
+  existeEmprendimiento(): boolean {
+    let existe = false;
+    this.emprendimientoService.obtenerPorId(this.idUser).subscribe(
+      res => {
+        existe = true; // Si existe, asigna true
+      },
+      error => {
+        existe = false; // Si no existe, asigna false
+      }
+    );
+    return existe; // Retorna el valor de existencia
   }
 
   obtenerUsuario() {
@@ -111,10 +193,10 @@ export class FormEmprendimientoComponent implements OnInit {
     this.SharedDataService.username$.subscribe(name => this.username = name ?? '');
     this.SharedDataService.role$.subscribe(role => this.role = role ?? '');
     this.SharedDataService.roles$.subscribe(roles => this.roles = roles);
-    console.log('ID de usuario:', this.idUser);
-    console.log('Nombre de usuario:', this.username);
-    console.log('Rol de usuario:', this.role);
-    console.log('Roles de usuario:', this.roles);
+    // console.log('ID de usuario:', this.idUser);
+    // console.log('Nombre de usuario:', this.username);
+    // console.log('Rol de usuario:', this.role);
+    // console.log('Roles de usuario:', this.roles);
   }
 
 }

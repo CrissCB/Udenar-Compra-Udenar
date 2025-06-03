@@ -21,26 +21,23 @@
                     <td>{{ feria.id }}</td>
                     <td>{{ feria.nombre }}</td>
                     <td>{{ feria.estado }}</td>
-                    <td>{{ feria.Inicio }}</td>
-                    <td>{{ feria.fechaCierre }}</td>
+                    <td>{{ feria.fecha_inicio }}</td>
+                    <td>{{ feria.fecha_fin }}</td>
                     <td>{{ feria.solicitud }}</td>
                     <td>
                         <div class="d-flex flex-wrap gap-2">
-                            <a href="#" (click)="participar()" class="btn btn-sm btn-outline-primary"
-                                title="Participar en la feria">
-                                <i class="fas fa-hand-paper"></i>
-                            </a>
-
-                            <a href="#" (click)="cancelar()" class="btn btn-sm btn-outline-danger"
-                                title="Cancelar participación">
-                                <i class="fas fa-times"></i>
-                            </a>
-
-                            <a (click)="seleccionarFeria(feria)" data-bs-toggle="modal"
-                                data-bs-target="#detalleFeriaModal" title="Ver detalles"
-                                class="btn btn-sm btn-secondary">
-                                <i class="fas fa-eye"></i>
-                            </a>
+                          <button type="button" (click)="participar()" class="btn btn-sm btn-outline-primary" title="Participar en la feria">
+                            <i class="fas fa-hand-paper"></i>
+                          </button>
+                        
+                          <button type="button" (click)="cancelar()" class="btn btn-sm btn-outline-danger" title="Cancelar participación">
+                            <i class="fas fa-times"></i>
+                          </button>
+                        
+                          <button type="button" (click)="seleccionarFeria(feria)" data-bs-toggle="modal" data-bs-target="#detalleFeriaModal"
+                            class="btn btn-sm btn-secondary" title="Ver detalles">
+                            <i class="fas fa-eye"></i>
+                          </button>
                         </div>
                     </td>
                 </tr>
