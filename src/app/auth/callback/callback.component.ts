@@ -131,7 +131,7 @@ export class CallbackComponent implements OnInit {
 
     this.usuariosservice.storeUsuarios(dataUser).subscribe(
       response => {
-        console.log('Usuario creado exitosamente:');
+        console.log('Usuario creado exitosamente:', response);
       },
       error => {
         console.error('Error al crear el usuario:', error);

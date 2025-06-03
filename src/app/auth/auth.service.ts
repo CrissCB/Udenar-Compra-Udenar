@@ -5,24 +5,27 @@ import { Injectable } from '@angular/core';
 })
 
 export class AuthService {
-  private token: string | null = null;
-  private idToken: string | null = null;
+  private token = 'access_token';
+  private idToken = 'id_token';
 
   setToken(token: string): void {
-    this.token = token;
     localStorage.setItem(this.token, token);
   }
 
   getToken(): string | null {
-    return this.token;
+    return localStorage.getItem(this.token);
   }
 
   setIdToken(idToken: string): void {
-    this.idToken = idToken;
     sessionStorage.setItem(this.idToken, idToken);
   }
 
   getIdToken(): string | null {
-    return this.idToken;
+    return sessionStorage.getItem(this.idToken);
+  }
+
+  clearTokens(): void {
+    localStorage.removeItem(this.token);
+    sessionStorage.removeItem(this.idToken);
   }
 }

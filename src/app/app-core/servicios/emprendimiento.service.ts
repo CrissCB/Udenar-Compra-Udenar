@@ -18,8 +18,8 @@ export class EmprendimientoService extends ServiceBase {
     return this.http.post(`${this.ApiUrl}/emprendimiento`, data);
   }
 
-  actualizarEmprendimiento(data: any) {
-    return this.http.put(`${this.ApiUrl}/${data.id}`, data); // si tienes ID
+  actualizarEmprendimiento(data: any):  Observable<any>  {
+    return this.http.put(`${this.ApiUrl}/emprendimiento/${data.id_usuario}`, data); // si tienes ID
   }
   obtenerPorId(id: string): Observable<any> {
     return this.http.get(`${this.ApiUrl}/emprendimiento/${id}`);
@@ -33,8 +33,16 @@ export class EmprendimientoService extends ServiceBase {
     return this.http.get(`${this.ApiUrl}/categoria_emprendimiento`);
 
   }
-  
+
+  obtenerCategoriaEmprendimientoPorId(id: number): Observable<any> {
+    return this.http.get(`${this.ApiUrl}/categoria_emprendimiento/${id}`);
+  }
+
   obtenerCategoriaProducto(): Observable<any> {
     return this.http.get(`${this.ApiUrl}/categoria_productos`);
+  }
+
+  obtenerCategoriaProductoPorId(id: number): Observable<any> {
+    return this.http.get(`${this.ApiUrl}/categoria_productos/categoria/${id}`);
   }
 }

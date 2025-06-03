@@ -21,14 +21,12 @@ export class PublicacionComponent implements OnInit {
   nombre_emprendimiento: string = '';
   idEmprendimiento: string = '';
   categoria: string = '';
-  descripcion: string = 'Emprendimiento dedicado a la creación y venta de artesanías elaboradas a mano, que rescatan tradiciones culturales y promueven el trabajo local con materiales sostenibles y diseños únicos.';
-  marca: string = 'Artemania';
+  descripcion: string = '';
+  marca: string = '';
   //Datos del usuario
   id_usuario: string = '';
-  nombre_apellido_emprendedor: string='William Perez';
+  nombre_apellido_emprendedor: string='';
   redes: string = '';
-
-
  
     productos = [
     { nombre: 'Nombre Producto', precio: 0.00, comentarios: 0, likes: 0 },
@@ -43,21 +41,47 @@ export class PublicacionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.obtenerUsuario();
     this.obtenerIdEmprendimiento();
   }
 
   obtenerIdEmprendimiento() {
-    this.SharedDataService.idUser$.subscribe(id => this.id_usuario = id ?? '');
-
-    this.emprendimientoService.obtenerPorId('' + this.id_usuario).subscribe({
-      next: (data) => {
-        this.nombre_emprendimiento = data.Emprendimiento.nombre;
-        console.log('ID de emprendimiento obtenido:', this.idEmprendimiento);
+    this.emprendimientoService.obtenerPorId(this.id_usuario).subscribe(
+      res => {
+        this.idEmprendimiento = res.data.id;
+        this.nombre_emprendimiento = res.data.nombre;
+        this.marca = res.data.marca;
+        this.descripcion = res.data.descripcion;
+        
+        this.obternerCategoriaEmprendimiento(res.data.id_cat);
       },
-      error: (error) => {
-        console.error('Error al obtener el ID de emprendimiento:', error);
+      error => {
+        console.error('Error al obtener el emprendimiento:', error);
       }
-    });
+    );
+  }
+
+  obternerCategoriaEmprendimiento(id: number) {
+    this.emprendimientoService.obtenerCategoriaEmprendimientoPorId(id).subscribe(
+      res => {
+        this.categoria = res.data.nombre;
+      },
+      error => {
+        console.error('Error al obtener la categoría del emprendimiento:', error);
+      }
+    );
+  }
+
+  obtenerUsuario() {
+    // this.SharedDataService.usuario$.subscribe(usuario => this.usuario = usuario);
+    this.SharedDataService.idUser$.subscribe(id => this.id_usuario = id ?? '');
+    this.SharedDataService.username$.subscribe(name => this.nombre_apellido_emprendedor = name ?? '');
+    // this.SharedDataService.role$.subscribe(role => this.role = role ?? '');
+    // this.SharedDataService.roles$.subscribe(roles => this.roles = roles);
+    // console.log('ID de usuario:', this.id_usuario);
+    // console.log('Nombre de usuario:', this.nombre_apellido_emprendedor);
+    // console.log('Rol de usuario:', this.role);
+    // console.log('Roles de usuario:', this.roles);
   }
 }
 

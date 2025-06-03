@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { Feria } from '../../../app-core/interfaces/feria';
+import { FeriaService } from "../../../../app/app-core/servicios/feria.service" 
 
 @Component({
   selector: 'app-editar-lider',
@@ -10,53 +13,99 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } 
   styleUrls: ['./editar-formulario.component.scss']
 })
 export class editarLiderForm implements OnInit {
+  @Input() ferias: any[] = []; 
+
   liderForm!: FormGroup;
 
-  idFeria: string = 'FeriaId123';
-  constructor(private fb: FormBuilder) {}
+  idFeria: string = '';
+  constructor(private fb: FormBuilder, private feriaService: FeriaService) {}
 
   ngOnInit(): void {
-  this.liderForm = this.fb.group({
-    nombre: ['', Validators.required],
-    fechaInicio: [this.getFechaActual(), Validators.required],
-    fechaCierre: [this.getFechaActualMasUnDia(), Validators.required],
-    descripcion: ['']
-  });
-}
+    this.liderForm = this.fb.group({
+      idFeria: ['', Validators.required],
+      nombre: ['', Validators.required],
+      descripcion: [''],
+      fecha_inicio: ['', Validators.required],
+      fecha_fin: ['', Validators.required],
+      modalidad: ['', Validators.required],
+      localidad: ['', Validators.required],
+      estado: ['pendiente', Validators.required]
+    });
+
+    this.cargarDatosFeria();
+  }
 
   registrar(): void {
+    console.log('Formulario enviado:', this.liderForm.value);
     if (this.liderForm.valid) {
-      console.log('Formulario válido:', this.liderForm.value);
-      alert('Líder registrado exitosamente');
-      this.liderForm.reset();
+      const datos = {
+        ...this.liderForm.value
+      }
+
+      this.feriaService.actualizarFeria(this.idFeria, datos).subscribe(
+        res => {
+          alert('Feria actualizada exitosamente');
+          this.liderForm.reset();
+        },
+        error => {
+          console.error('Error al actualizar la feria:', error);
+          alert('Error al actualizar la feria. Por favor, inténtalo de nuevo más tarde.');
+        }
+      );
     } else {
-      alert('Por favor complete todos los campos obligatorios.');
+      alert('Por favor completa todos los campos obligatorios.');
     }
   }
 
   cancelar(): void {
-    this.liderForm.reset();
+    this.liderForm.reset({
+      idFeria: '',
+      nombre: '',
+      descripcion: '',
+      fecha_inicio: '',
+      fecha_fin: '',
+      modalidad: '',
+      localidad: '',
+      estado: ''
+    });
   }
 
-  private getFechaActual(): string {
-  const hoy = new Date();
-  const year = hoy.getFullYear();
-  const month = String(hoy.getMonth() + 1).padStart(2, '0');
-  const day = String(hoy.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
+  cargarDatosFeria(): void {
+    this.feriaService.getFerias().subscribe(
+      res => {
+        this.ferias = res.data as Feria[];
+      },
+      error => {
+        console.error('Error al cargar las ferias:', error);
+      }
+    );
+  }
+
+  cargarDatosFeriaPorId(id: string): void {
+    this.feriaService.getFeriaById(id).subscribe(
+      res => {
+        const feria = res.data as Feria;
+        this.liderForm.patchValue({
+          idFeria: feria.id,
+          nombre: feria.nombre,
+          descripcion: feria.descripcion,
+          fecha_inicio: this.formatearFecha(feria.fecha_inicio),
+          fecha_fin: this.formatearFecha(feria.fecha_fin),
+          modalidad: feria.modalidad,
+          localidad: feria.localidad,
+          estado: feria.estado
+        });
+
+        this.idFeria = ''+feria.id; // Guardar el ID de la feria para futuras actualizaciones
+      },
+      error => {
+        console.error('Error al cargar la feria:', error);
+      }
+    );
+  }
+
+  formatearFecha(fecha: string): string {
+    const date = new Date(fecha);
+    return date.toISOString().split('T')[0]; // Formato YYYY-MM-DD
+  }
 }
-
-  private getFechaActualMasUnDia(): string {
-  const mañana = new Date();
-  mañana.setDate(mañana.getDate() + 1); // Suma un día
-
-  const year = mañana.getFullYear();
-  const month = String(mañana.getMonth() + 1).padStart(2, '0');
-  const day = String(mañana.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
-
- 
-}
-
-

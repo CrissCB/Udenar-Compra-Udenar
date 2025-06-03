@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+
+
 import { FeriaService } from "../../../../app/app-core/servicios/feria.service" 
 
 @Component({
@@ -24,22 +27,26 @@ export class FormFeriaComponent implements OnInit {
       modalidad: ['', Validators.required],
       localidad: ['', Validators.required],
       estado: ['pendiente', Validators.required]
-  }, { validators: this.validarFechas() });
+    }, { validators: fechasValidas }); 
   }
 
   registrar(): void {
+    console.log('Formulario enviado:', this.FormFeriaComponent.value);
     if (this.FormFeriaComponent.valid) {
-      this.feriaService.crearFeria(this.FormFeriaComponent.value).subscribe({
-        next: (res) => {
-          console.log('Feria registrada:', res);
-          alert('Feria registrada exitosamente.');
+      const datos = {
+        ...this.FormFeriaComponent.value
+      }
+
+      this.feriaService.crearFeria(datos).subscribe(
+        res => {
+          alert('Feria creada exitosamente');
           this.FormFeriaComponent.reset();
         },
-        error: (err) => {
-          console.error('Error al registrar feria:', err);
-          alert('Ocurrió un error al registrar la feria.');
+        error => {
+          console.error('Error al crear la feria:', error);
+          alert('Error al crear la feria. Por favor, inténtalo de nuevo más tarde.');
         }
-      });
+      );
     } else {
       alert('Por favor completa todos los campos obligatorios.');
     }
@@ -59,18 +66,20 @@ export class FormFeriaComponent implements OnInit {
     mañana.setDate(mañana.getDate() + 1);
     return mañana.toISOString().split('T')[0];
   }
+}
 
-  validarFechas() {
-  return (formGroup: FormGroup) => {
-    const inicio = formGroup.get('fecha_inicio')?.value;
-    const fin = formGroup.get('fecha_fin')?.value;
+export const fechasValidas: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
+  const fechaElaboracion = group.get('fecha_elaboracion')?.value;
+  const fechaVencimiento = group.get('fecha_vencimiento')?.value;
 
-    if (inicio && fin && fin < inicio) {
-      formGroup.get('fecha_fin')?.setErrors({ fechaInvalida: true });
-    } else {
-      formGroup.get('fecha_fin')?.setErrors(null);
+  if (fechaElaboracion && fechaVencimiento) {
+    const elaboracion = new Date(fechaElaboracion);
+    const vencimiento = new Date(fechaVencimiento);
+
+    if (elaboracion >= vencimiento) {
+      return { fechasInvalidas: 'La fecha de elaboración debe ser anterior a la de vencimiento' };
     }
-  };
-}
+  }
 
-}
+  return null;
+};

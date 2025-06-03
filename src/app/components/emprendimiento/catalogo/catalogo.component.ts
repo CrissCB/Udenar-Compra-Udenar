@@ -1,4 +1,4 @@
-import { Component, Input, input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductoService } from '../../../app-core/servicios/producto.service';
 import { EmprendimientoService } from '../../../app-core/servicios/emprendimiento.service';
@@ -7,6 +7,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import {  FormProductoComponent} from '../form-producto/form-producto.component';
+import { SharedDataService } from '../../../app-core/servicios/shared-data.service';
+
 @Component({
   selector: 'app-catalogo',
   styleUrls: ['./catalogo.component.scss'],
@@ -20,7 +22,8 @@ export class CatalogoComponent implements OnInit {
   productoForm!: FormGroup;
   modoEdicion: boolean = false;
   idProductoEditar: number | null = null;
-  idEmprendimiento = 1; // Asigna este valor dinámicamente si es necesario
+  idEmprendimiento: number | null = null; 
+  id_usuario: string = '';
   nombreEmprendimiento = 'Mi Emprendimiento';
   productoSeleccionado: any = null;
 
@@ -29,41 +32,16 @@ export class CatalogoComponent implements OnInit {
     private fb: FormBuilder,
     private emprendimientoService: EmprendimientoService,
     private router: Router,
+    private SharedDataService: SharedDataService
   ) { }
 
   ngOnInit(): void {
     //Datos para probar la vista
-    this.productos = [
-      {
-        id: 1,
-        nombre: 'Camisa Deportiva',
-        detalle: 'Camisa de tela transpirable para deporte',
-        precio: 45000,
-        stock: 20,
-        fecha_elaboracion: '2025-05-01',
-        fecha_vencimiento: '2026-05-01',
-        talla: 'M',
-        codigo_qr: 'ABC123XYZ',
-        id_cat: 2
-      },
-
-    ];
-
-    // Inicializar el formulario
-    this.productoForm = this.fb.group({
-      id_emprendimiento: [this.idEmprendimiento],
-      nombre: ['', Validators.required],
-      detalle: [''],
-      precio: [0, [Validators.required, Validators.min(0)]],
-      stock: [0, [Validators.required, Validators.min(0)]],
-      fecha_elaboracion: [''],
-      fecha_vencimiento: [''],
-      talla: [''],
-      codigo_qr: [''],
-      id_cat: ['', Validators.required]
-    });
-    this.cargarProductos();
+    this.productos = [];
+    this.obtenerUsuario();
+    this.cargarEmprendimiento();
     this.cargarCategorias();
+    // Inicializar el formulario
     this.productoForm = this.fb.group({
       id_emprendimiento: [this.idEmprendimiento],
       nombre: ['', Validators.required],
@@ -78,81 +56,73 @@ export class CatalogoComponent implements OnInit {
     });
   }
 
-
   seleccionarProducto(producto: any) {
     this.productoSeleccionado = { ...producto }; // Clon para no modificar directamente
+  }
+
+  eliminarProducto(producto: any): void {
+    this.productoService.eliminarProducto(producto.id).subscribe(
+      res => {
+        this.cargarProductos();
+      },
+      error => {
+        console.error('Error al eliminar producto:', error);
+      }
+    );
   }
 
   cancelarEdicion() {
     this.productoSeleccionado = null;
   }
 
-
   guardarEdicion(productoActualizado: any) {
-    // Lógica para actualizar el producto (API o local)
-    // Ejemplo:
-    const index = this.productos.findIndex(p => p.id === productoActualizado.id);
-    if (index !== -1) {
-      this.productos[index] = { ...productoActualizado };
-    }
-
+    this.cargarProductos();
     this.productoSeleccionado = null;
   }
 
-
   cargarProductos(): void {
-    this.productoService.getProductos().subscribe(data => {
-      console.log('Productos obtenidos desde el backend:', data);
-      this.productos = data as any[];
-    });
+    if (this.idEmprendimiento) {
+      this.productoService.getProductoById(this.idEmprendimiento).subscribe(
+        res => {
+          this.productos = res.data || [];
+
+          this.cargarNombreProducto(); // Cargar nombres de productos
+        },
+        error => {
+          console.error('Error al cargar productos:', error);
+        }
+      );
+    }
   }
 
   cargarCategorias(): void {
     this.emprendimientoService.obtenerCategoriaProducto().subscribe(data => {
-      this.categorias = data;
+      this.categorias = data.data || [];
     });
   }
 
-  registrar(): void {
-    if (this.productoForm.invalid) {
-      this.productoForm.markAllAsTouched();
-      return;
-    }
+  cargarEmprendimiento(): void {
+    this.emprendimientoService.obtenerPorId(this.id_usuario).subscribe(data => {
+      this.idEmprendimiento = data.data.id;
+      this.nombreEmprendimiento = data.data.nombre;
+      this.cargarProductos();
+    });
+  }
 
-    const datos = {
-      ...this.productoForm.value,
-      id_emprendimiento: this.idEmprendimiento
-    };
+  obtenerUsuario() {
+    this.SharedDataService.idUser$.subscribe(id => this.id_usuario = id ?? '');
+  }
 
-    if (this.modoEdicion && this.idProductoEditar) {
-      // Actualizar producto
-      this.productoService.actualizarProducto(this.idProductoEditar, datos).subscribe({
-        next: () => {
-          alert('Producto actualizado exitosamente');
-          this.modoEdicion = false;
-          this.idProductoEditar = null;
-          this.cargarProductos();
-          this.productoForm.reset();
+  cargarNombreProducto(){
+    for (const producto of this.productos) {
+      this.emprendimientoService.obtenerCategoriaProductoPorId(producto.id_cat).subscribe(
+        res => {
+          producto.categoria = res.data.nombre;
         },
-        error: () => {
-          alert('Error al actualizar producto');
+        error => {
+          console.error('Error al cargar nombre del producto:', error);
         }
-      });
+      );
     }
   }
-
-
-  eliminarProducto(producto: any): void {
-  
-  }
-
-
-  limpiarCampos(): void {
-    this.productoForm.reset();
-  }
-
-  cancelar(): void {
-    this.router.navigate(['/productos']); // Ajusta a la ruta de retorno deseada
-  }
-
 }
