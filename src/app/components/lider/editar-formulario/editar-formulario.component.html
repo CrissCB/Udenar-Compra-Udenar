@@ -1,0 +1,47 @@
+<div class="form-container">
+  <h2>Editar información Líder</h2>
+  <form [formGroup]="liderForm" (ngSubmit)="registrar()">
+
+
+    <label for="idFeria">Feria:</label>
+      <select id="idFeria" formControlName="idFeria">
+          <option *ngFor="let feria of ferias" [value]="feria.id">{{ feria.nombre }}</option>
+    </select> 
+    <div class="button-group">
+      <button type="button" (click)="cargarDatosFeriaPorId(liderForm.value.idFeria)">
+        Cargar datos de feria
+      </button>
+    </div>
+
+    <label for="modalidad">Modalidad:</label>
+    <select id="modalidad" formControlName="modalidad">
+        <option value="" disabled selected>Selecciona una modalidad</option>
+        <option value="presencial">Presencial</option>
+        <option value="virtual">Virtual</option>
+    </select>
+
+    <label for="fechaInicio">Fecha Inicio:</label>
+    <input type="date" id="fechaInicio" formControlName="fecha_inicio">
+
+    <label for="fechaCierre">Fecha Cierre:</label>
+    <input type="date" id="fechaCierre" formControlName="fecha_fin">
+
+    <label for="descripcion">Descripción:</label>
+    <textarea id="descripcion" formControlName="descripcion" rows="4" cols="50" placeholder="Describe tu emprendimiento..."></textarea>
+
+    <label for="localidad">Localidad:</label>
+    <input type="text" id="localidad" formControlName="localidad" required>
+
+    <label for="estado">Estado:</label>
+    <select id="estado" formControlName="estado" required>
+      <option value="próxima">Próxima</option>
+      <option value="en curso">En curso</option>
+      <option value="finalizada">Finalizada</option>
+    </select>
+
+    <div class="button-group">
+      <button type="submit">Actualizar</button>
+      <button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+</div>

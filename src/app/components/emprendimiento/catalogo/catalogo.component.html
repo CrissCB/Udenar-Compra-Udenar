@@ -1,0 +1,46 @@
+<div class="form-container">
+  <h2 class="titulo">Productos registrados</h2>
+
+
+
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered align-middle">
+      <thead class="table-light">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Categoría</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of productos">
+          <td>{{ producto.id }}</td>
+          <td>{{ producto.nombre }}</td>
+          <td>{{ producto.categoria }}</td>
+          <td>{{ producto.estado }}</td>
+          <td>
+
+            <div class="d-flex flex-wrap gap-2">
+              <button (click)="seleccionarProducto(producto)" class="btn btn-sm btn-outline-primary" title="Editar">
+                <i class="fas fa-edit" icono-editar></i>
+              </button>
+
+              <button (click)="eliminarProducto(producto)" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                <i class="fas fa-trash-alt" icono-eliminar></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+
+  <!-- FORMULARIO CONDICIONAL -->
+  <app-form-producto *ngIf="productoSeleccionado" [producto]="productoSeleccionado" [modoEdicion]="true"
+    (onCancel)="cancelarEdicion()" (onGuardar)="guardarEdicion($event)">
+  </app-form-producto>
+</div>

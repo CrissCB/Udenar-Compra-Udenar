@@ -1,0 +1,64 @@
+<!-- Card de emprendimiento -->
+<div class="publicacion-container">
+
+  <div class="card emprendimiento-card shadow-sm p-4 mb-4 border border-success border-2 rounded-4">
+    <div class="row g-4 align-items-start">
+      <!-- Columna Izquierda (dividida en 2 columnas internas) -->
+      <div class="col-md-8">
+        <div class="row" style="height: 100%;">
+          <!-- Imagen -->
+          <div class="col-md-6 d-flex align-items-center justify-content-center" style="height: 100%;">
+            <img src="assets/images/emprendimiento.jpg" alt="imagen representativa emprendimiento"
+              class="img-fluid img-emprendimiento"
+              style="max-height: 80; max-width: 80%; object-fit: cover; border-radius: 1rem; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+          </div>
+
+          <!-- Información -->
+          <div class="col-md-6">
+            <h3 class="title mb-3 text-center "> {{ nombre_emprendimiento }}</h3>
+
+            <h4 class="mb-2">
+              <strong>Conoce nuestro emprendimiento</strong><br>
+            </h4>
+            <p class="descripcion"> {{ descripcion }}</p>
+
+            <h4 class="mb-2 "><strong>Categoría:</strong> {{ categoria }}</h4>
+            <h4 class="mb-2"><strong>Marca:</strong> {{ marca }}</h4>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna Derecha -->
+      <div class="col-md-4 text-center">
+        <div class="perfil mb-3">
+          <div class="avatar mb-2">
+            <i class="fas fa-user"></i>
+          </div>
+          <p class="nombre mb-1">{{ nombre_apellido_emprendedor }}</p>
+        </div>
+
+        <div class="social-icons mb-3">
+          <i class="fab fa-facebook me-2"></i>
+          <i class="fab fa-instagram me-2"></i>
+          <i class="fab fa-whatsapp"></i>
+        </div>
+
+        <div class="qr-code">
+          <img src="assets/images/qr_example.png" alt="QR Code" class="img-fluid" width="100">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Acciones para la publicación -->
+  <div class="text-end">
+    <button class="btn btn-primary me-2" title="Cargar imagen"><i class="fa-solid fa-file-arrow-up" ></i>Imagen</button>
+    <button class="btn btn-primary me-2" type="submit">
+      <i class="fas fa-upload me-2"></i> Publicar
+    </button>
+    <button class="btn btn-danger" type="submit">
+      <i class="fas fa-xmark me-2"></i> Cancelar
+    </button>
+  </div>
+
+</div>

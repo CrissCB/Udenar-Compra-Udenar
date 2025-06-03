@@ -1,0 +1,54 @@
+<div class="form-container">
+    <h2>{{ modoEdicion ? 'Edición de Producto' : 'Registro de Producto' }}</h2>
+
+    <form [formGroup]="productoForm" (ngSubmit)="registrar()">
+
+        <label for="nombre_emprendimiento">Nombre Emprendimiento:</label>
+        <input type="text" id="nombre_emprendimiento" formControlName="nombre_emprendimiento"
+            [value]="nombre_emprendimiento" readonly>
+
+        <label for="nombre">Nombre Producto:</label>
+        <input type="text" id="nombre" formControlName="nombre">
+
+        <label for="detalle">Detalle:</label>
+        <textarea id="detalle" formControlName="detalle" rows="4"
+            placeholder="Describa el producto con detalle"></textarea>
+
+        <label for="precio">Precio:</label>
+        <input type="number" id="precio" formControlName="precio">
+
+        <label for="stock">Stock:</label>
+        <input type="number" id="stock" formControlName="stock">
+
+        <label for="fecha_elaboracion">Fecha de Elaboración:</label>
+        <input type="date" id="fecha_elaboracion" formControlName="fecha_elaboracion">
+        
+        <div *ngIf="fechasInvalidas && productoForm.touched" style="color: red;">
+          {{ fechasInvalidas }}
+        </div>
+
+        <label for="fecha_vencimiento">Fecha de Vencimiento:</label>
+        <input type="date" id="fecha_vencimiento" formControlName="fecha_vencimiento">
+
+        <label for="talla">Talla:</label>
+        <input type="text" id="talla" formControlName="talla">
+
+        <label for="codigo_qr">Código QR:</label>
+        <input type="text" id="codigo_qr" formControlName="codigo_qr">
+
+        <label for="categoria">Categoría:</label>
+
+        <select id="categoria" formControlName="id_cat">
+
+            <option value="" class="" selected="selected">Seleccione</option>
+            <option *ngFor="let cat of categorias" [value]="cat.id_cat">{{ cat.nombre }}</option>
+        </select>
+
+        <div class="button-group">
+            <button type="button" (click)="cancelar()">Cancelar</button>
+            <button type="button" (click)="limpiarCampos()"><i class="fas fa-eraser"></i>Limpiar Campos</button>
+            <button type="submit">{{ modoEdicion ? 'Guardar Cambios' : 'Registrar'}}</button>
+        </div>
+
+    </form>
+</div>

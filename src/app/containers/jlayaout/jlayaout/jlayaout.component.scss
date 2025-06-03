@@ -1,0 +1,95 @@
+/* Contenedor general layout */
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(90deg, #060606, #265532);
+    padding: 10px 20px;
+    color: rgb(202, 193, 193);
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0; /* esquina inferior izquierda sin redondear */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-bottom: 4px solid #334712; /* <-- Borde inferior con color */
+    
+  }
+
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .logo-image {
+    height: 80px;
+    width: auto;
+  }
+
+  .header-left h1 {
+    font-size: 2.0rem;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .user-info {
+    text-align: center;
+    font-size: 1.2rem;
+  }
+
+  .sigin:hover{
+    color: #91CC26; /* Cambia el color al pasar el mouse */
+    cursor: pointer;
+  }
+  .role {
+    font-size: 0.9rem;
+    color: #ffffff;
+  font-size: 1.1rem;
+  margin-left: 5px;
+
+}
+.rol-label {
+  color: #000000;        /* Verde fuerte */
+  font-weight: bold;
+  font-size:  1.0rem 
+ 
+}
+
+.rol-variable {
+  color: #ffffff;        /* Verde oscuro */
+  font-weight: bold;
+ text-transform: capitalize;
+  font-size:  1.0rem  
+}
+
+.username {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.0rem;
+  margin-left: 5px;
+  text-transform: capitalize; /* Primera letra en mayúscula */
+}
+
+  
+/* Botón toggle */
+.toggle-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+ 
+  margin-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+.toggle-btn:hover {
+  color: #105aa3; /* Color azul al pasar mouse */
+}
+

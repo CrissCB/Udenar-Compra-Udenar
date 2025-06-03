@@ -1,0 +1,75 @@
+<!-- participación-ferias.component.html -->
+<div class="container mt-4">
+
+    <h3 class="text-center fw-bold mb-4">Convocatoria de ferias</h3>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Estado</th>
+                    <th>Inicio convocatoria</th>
+                    <th>Fecha de cierre</th>
+                    <th>Solicitud</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let feria of ferias">
+                    <td>{{ feria.id }}</td>
+                    <td>{{ feria.nombre }}</td>
+                    <td>{{ feria.estado }}</td>
+                    <td>{{ feria.fecha_inicio }}</td>
+                    <td>{{ feria.fecha_fin }}</td>
+                    <td>{{ feria.solicitud }}</td>
+                    <td>
+                        <div class="d-flex flex-wrap gap-2">
+                          <button type="button" (click)="participar()" class="btn btn-sm btn-outline-primary" title="Participar en la feria">
+                            <i class="fas fa-hand-paper"></i>
+                          </button>
+                        
+                          <button type="button" (click)="cancelar()" class="btn btn-sm btn-outline-danger" title="Cancelar participación">
+                            <i class="fas fa-times"></i>
+                          </button>
+                        
+                          <button type="button" (click)="seleccionarFeria(feria)" data-bs-toggle="modal" data-bs-target="#detalleFeriaModal"
+                            class="btn btn-sm btn-secondary" title="Ver detalles">
+                            <i class="fas fa-eye"></i>
+                          </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Modal de detalles -->
+        <div class="modal fade" id="detalleFeriaModal" tabindex="-1" aria-labelledby="detalleFeriaModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="detalleFeriaModalLabel">Detalles de la Feria</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>ID:</strong> {{ feriaSeleccionada?.id }}</p>
+                        <p><strong>Nombre:</strong> {{ feriaSeleccionada?.nombre }}</p>
+                        <p><strong>Estado:</strong> {{ feriaSeleccionada?.estado }}</p>
+                        <p><strong>Inicio convocatoria:</strong> {{ feriaSeleccionada?.Inicio }}</p>
+                        <p><strong>Fecha de cierre:</strong> {{ feriaSeleccionada?.fechaCierre }}</p>
+                        <p><strong>Solicitud:</strong> {{ feriaSeleccionada?.solicitud }}</p>
+                        <p><strong>Modalidad:</strong> {{ feriaSeleccionada?.modalidad }}</p>
+                        <p><strong>Descripción:</strong> {{ feriaSeleccionada?.descripcion}}</p>
+                        <!-- Agrega más campos si los hay -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
